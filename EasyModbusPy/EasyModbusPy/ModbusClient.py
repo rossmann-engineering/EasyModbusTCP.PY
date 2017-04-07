@@ -13,47 +13,50 @@ class ModbusClient(object):
     '''
     classdocs
     '''  
+    
+    
     def __init__(self, *params):
         self.__transactionIdentifier=0
+        self._unitIdentifier = 1;
         self.ser = None
         self.tcpClientSocket = None
         #Constructor for RTU
         if len(params) == 1 & isinstance(params[0], str):
             self.serialPort = params[0]
-            self.baudrate = 9600
-            self.parity = Parity.even
-            self.stopbits = Stopbits.one
+            self._baudrate = 9600
+            self._parity = Parity.even
+            self._stopbits = Stopbits.one
             self.__transactionIdentifier = 0
             self.ser = serial.Serial()
         #Constructor for TCP
         if (len(params) == 2) & isinstance(params[0], str) & isinstance(params[1], int):
             self.tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.ipAddress = params[0]
-            self.port = params[1]
+            self._ipAddress = params[0]
+            self._port = params[1]
             
             
     def Connect(self):    
         if (self.ser is not None):   
             self.ser.port = self.serialPort
-            self.ser.baudrate = self.baudrate
-            self.stopbits = Stopbits.one
+            self.ser._baudrate = self._baudrate
+            self._stopbits = Stopbits.one
             self.ser.timeout = 1
-            self.parity = Parity.none
-            if self.stopbits == 0:               
+            self._parity = Parity.none
+            if self._stopbits == 0:               
                 self.ser.stopbits = serial.STOPBITS_ONE
-            elif self.stopbits == 1:               
+            elif self._stopbits == 1:               
                 self.ser.stopbits = serial.STOPBITS_TWO
-            elif self.stopbits == 2:               
+            elif self._stopbits == 2:               
                 self.ser.stopbits = serial.STOPBITS_ONE_POINT_FIVE         
-            if self.parity == 0:               
+            if self._parity == 0:               
                 self.ser.parity = serial.PARITY_EVEN
-            elif self.parity == 1:               
+            elif self._parity == 1:               
                 self.ser.parity = serial.PARITY_EVEN
-            elif self.parity == 2:               
+            elif self._parity == 2:               
                 self.ser.parity = serial.PARITY_EVEN 
             self.ser.open()
         if (self.tcpClientSocket is not None):  
-            self.tcpClientSocket.connect((self.ipAddress, self.port))
+            self.tcpClientSocket.connect((self._ipAddress, self._port))
   
     def close(self):
         if (self.ser is not None):
@@ -69,7 +72,6 @@ class ModbusClient(object):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         if (startingAddress > 65535 | quantity >2000):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 2000");
-        self.unitIdentifier = 1
         functionCode = 2
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -81,7 +83,7 @@ class ModbusClient(object):
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
             CRC = self.__calculateCRC(data, len(data)-2, 0)
             CrcLSB = CRC&0xFF
             CrcMSB = (CRC&0xFF00) >> 8
@@ -110,7 +112,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
             self.tcpClientSocket.send(data)
             if (quantity % 8 != 0):
                 bytesToRead = 10+int(quantity/8)
@@ -140,7 +142,6 @@ class ModbusClient(object):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         if (startingAddress > 65535 | quantity >2000):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 2000");
-        self.unitIdentifier = 1
         functionCode = 1
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -152,7 +153,7 @@ class ModbusClient(object):
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
             CRC = self.__calculateCRC(data, len(data)-2, 0)
             CrcLSB = CRC&0xFF
             CrcMSB = (CRC&0xFF00) >> 8
@@ -181,7 +182,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
             self.tcpClientSocket.send(data)
             if (quantity % 8 != 0):
                 bytesToRead = 10+int(quantity/8)
@@ -212,7 +213,6 @@ class ModbusClient(object):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         if (startingAddress > 65535 | quantity >125):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 125");
-        self.unitIdentifier = 1
         functionCode = 3
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -224,7 +224,7 @@ class ModbusClient(object):
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
             CRC = self.__calculateCRC(data, len(data)-2, 0)
             CrcLSB = CRC&0xFF
             CrcMSB = (CRC&0xFF00) >> 8
@@ -250,7 +250,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
             self.tcpClientSocket.send(data)
             bytesToRead = 9+int(quantity*2)
             data = self.tcpClientSocket.recv(bytesToRead)
@@ -274,7 +274,6 @@ class ModbusClient(object):
                 raise Exception.SerialPortNotOpenedException("serial port not opened");
         if (startingAddress > 65535 | quantity >125):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 125");
-        self.unitIdentifier = 1
         functionCode = 4
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -286,7 +285,7 @@ class ModbusClient(object):
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
             CRC = self.__calculateCRC(data, len(data)-2, 0)
             CrcLSB = CRC&0xFF
             CrcMSB = (CRC&0xFF00) >> 8
@@ -312,7 +311,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
             self.tcpClientSocket.send(data)
             bytesToRead = 9+int(quantity*2)
             data = self.tcpClientSocket.recv(bytesToRead)
@@ -334,7 +333,6 @@ class ModbusClient(object):
         if (self.ser is not None):
             if (self.ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        self.unitIdentifier = 1
         functionCode = 5
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -350,7 +348,7 @@ class ModbusClient(object):
             valueLSB = 0x00
             valueMSB = (0x00) >> 8
         if (self.ser is not None):
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB,0,0] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB,0,0] )
             CRC = self.__calculateCRC(data, len(data)-2, 0)
             CrcLSB = CRC&0xFF
             CrcMSB = (CRC&0xFF00) >> 8
@@ -367,7 +365,7 @@ class ModbusClient(object):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x85) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            if data[1] == self.unitIdentifier:
+            if data[1] == self._unitIdentifier:
                 return True 
             else:
                 return False  
@@ -376,7 +374,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB] )
             self.tcpClientSocket.send(data)
             bytesToRead = 12
             data = self.tcpClientSocket.recv(bytesToRead)
@@ -397,7 +395,6 @@ class ModbusClient(object):
         if (self.ser is not None):
             if (self.ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        self.unitIdentifier = 1
         functionCode = 6
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -409,7 +406,7 @@ class ModbusClient(object):
         valueLSB = value&0xFF
         valueMSB = (value&0xFF00) >> 8
         if (self.ser is not None):
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB,0,0] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB,0,0] )
             CRC = self.__calculateCRC(data, len(data)-2, 0)
             CrcLSB = CRC&0xFF
             CrcMSB = (CRC&0xFF00) >> 8
@@ -426,7 +423,7 @@ class ModbusClient(object):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x86) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            if data[1] == self.unitIdentifier:
+            if data[1] == self._unitIdentifier:
                 return True 
             else:
                 return False   
@@ -435,7 +432,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB] )
             self.tcpClientSocket.send(data)
             bytesToRead = 12
             data = self.tcpClientSocket.recv(bytesToRead)
@@ -455,7 +452,6 @@ class ModbusClient(object):
         if (self.ser is not None):
             if (self.ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened");
-        self.unitIdentifier = 1
         functionCode = 15
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -482,7 +478,7 @@ class ModbusClient(object):
  
         valueToWrite.append(singleCoilValue)
         if (self.ser is not None):    
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
             data.append(len(valueToWrite))   #Bytecount 
             for i in range (0, len(valueToWrite)):
                 data.append(valueToWrite[i]&0xFF)      
@@ -503,7 +499,7 @@ class ModbusClient(object):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x8F) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            if data[1] == self.unitIdentifier:
+            if data[1] == self._unitIdentifier:
                 return True 
             else:
                 return False 
@@ -512,7 +508,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
             data.append(len(valueToWrite))   #Bytecount 
             for i in range (0, len(valueToWrite)):
                 data.append(valueToWrite[i]&0xFF)      
@@ -536,7 +532,6 @@ class ModbusClient(object):
         if (self.ser is not None):
             if (self.ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened");
-        self.unitIdentifier = 1
         functionCode = 16
         length = 6;
         transactionIdentifierLSB = self.__transactionIdentifier&0xFF
@@ -551,7 +546,7 @@ class ModbusClient(object):
         for i in range(0, len(values)):
             valueToWrite.append(values[i]);    
         if (self.ser is not None):       
-            data = bytearray([self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
             data.append(len(valueToWrite)*2)   #Bytecount 
             for i in range (0, len(valueToWrite)):                 
                 data.append((valueToWrite[i]&0xFF00) >> 8) 
@@ -572,7 +567,7 @@ class ModbusClient(object):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x90) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            if data[1] == self.unitIdentifier:
+            if data[1] == self._unitIdentifier:
                 return True 
             else:
                 return False     
@@ -581,7 +576,7 @@ class ModbusClient(object):
             protocolIdentifierMSB = 0x00;
             lengthLSB = 0x06;
             lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self.unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
             data.append(len(valueToWrite)*2)   #Bytecount 
             for i in range (0, len(valueToWrite)):                 
                 data.append((valueToWrite[i]&0xFF00) >> 8) 
@@ -611,7 +606,56 @@ class ModbusClient(object):
                 else:
                     crc = crc >> 1                 
         return crc
+    
+    def getPort(self):
+        return self._port
+    
+    def setPort(self, port):
+        self._port = port;
+    
+    Port = property(getPort, setPort)
+    
+    def getIPAddress(self):
+        return self._ipAddress
+    
+    def setIPAddress(self, ipAddress):
+        self._ipAddress = ipAddress;   
+       
+    IPAddress = property(getIPAddress, setIPAddress)
+    
+    def getUnitIdentifier(self):
+        return self._unitIdentifier
+    
+    def setUnitIdentifier(self, unitIdentifier):
+        self._unitIdentifier = unitIdentifier
 
+    UnitIdentifier = property(getUnitIdentifier, setUnitIdentifier)
+    
+    def getBaudrate(self):
+        return self._baudrate
+    
+    def setBaudrate(self, baudrate):
+        self._baudrate = baudrate
+        
+    Baudrate = property(getBaudrate, setBaudrate)
+    
+    def getParity(self):
+        return self._parity
+    
+    def setParity(self, parity):
+        self._parity = parity
+        
+    Parity = property(getParity, setParity)
+    
+    def getStopbits(self):
+        return self._stopbits
+    
+    def setStopbits(self, stopbits):
+        self._stopbits = stopbits
+        
+    Stopbits = property(getStopbits, setStopbits)
+    
+    
                
 
 class Parity():
