@@ -20,6 +20,7 @@ class ModbusClient(object):
         self._unitIdentifier = 1;
         self.ser = None
         self.tcpClientSocket = None
+        self.__connected = False
         #Constructor for RTU
         if len(params) == 1 & isinstance(params[0], str):
             self.serialPort = params[0]
@@ -57,12 +58,15 @@ class ModbusClient(object):
             self.ser.open()
         if (self.tcpClientSocket is not None):  
             self.tcpClientSocket.connect((self._ipAddress, self._port))
+        self.__connected = True
   
     def close(self):
         if (self.ser is not None):
             self.ser.close()
         if (self.tcpClientSocket is not None):
+            self.tcpClientSocket.shutdown(socket.SHUT_RDWR)
             self.tcpClientSocket.close()
+        self.__connected = False
         
             
     def ReadDiscreteInputs(self, startingAddress, quantity):
@@ -654,6 +658,9 @@ class ModbusClient(object):
         self._stopbits = stopbits
         
     Stopbits = property(getStopbits, setStopbits)
+    
+    def isConnected(self):
+        return self.__connected
     
     
                
