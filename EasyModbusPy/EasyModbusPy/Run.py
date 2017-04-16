@@ -6,7 +6,7 @@ Created on 12.09.2016
 '''
 from ModbusClient import *
     
-modbusClient = ModbusClient('127.0.0.1',502)
+modbusClient = ModbusClient('192.168.178.99', 502)
 modbusClient.Connect()
 discreteInputs = modbusClient.ReadDiscreteInputs(0, 8)
 print (discreteInputs)

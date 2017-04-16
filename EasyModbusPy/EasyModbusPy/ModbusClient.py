@@ -3,7 +3,8 @@ Created on 12.09.2016
 
 @author: Stefan Rossmann
 '''
-import serial
+#import serial
+import importlib
 import Exceptions
 import socket
 from builtins import int
@@ -31,6 +32,7 @@ class ModbusClient(object):
         self.__connected = False
         #Constructor for RTU
         if len(params) == 1 & isinstance(params[0], str):
+            serial = importlib.import_module("serial")
             self.serialPort = params[0]
             self._baudrate = 9600
             self._parity = Parity.even
@@ -38,7 +40,7 @@ class ModbusClient(object):
             self.__transactionIdentifier = 0
             self.ser = serial.Serial()
         #Constructor for TCP
-        if (len(params) == 2) & isinstance(params[0], str) & isinstance(params[1], int):
+        elif (len(params) == 2) & isinstance(params[0], str) & isinstance(params[1], int):
             self.tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self._ipAddress = params[0]
             self._port = params[1]
@@ -48,7 +50,8 @@ class ModbusClient(object):
         """
         Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
         """    
-        if (self.ser is not None):   
+        if (self.ser is not None): 
+            serial = importlib.import_module("serial")  
             self.ser.port = self.serialPort
             self.ser._baudrate = self._baudrate
             self._stopbits = Stopbits.one
