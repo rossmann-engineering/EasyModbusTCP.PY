@@ -7,6 +7,7 @@ from pickletools import string1
 class EasyModbusGUI(tkinter.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        master.title("EasyModbusPython Client")
         self.pack()
         self.createWidgets()
         
@@ -18,6 +19,7 @@ class EasyModbusGUI(tkinter.Frame):
         self.columnconfigure(3, pad=7)
         self.rowconfigure(3, weight=1)
         self.rowconfigure(5, pad=7)
+        
         
         #Button Read Coils
         self.readCoils = tkinter.Button(self, text="Read Coils (FC1)", width=25, command=self.ReadCoils)
@@ -77,10 +79,13 @@ class EasyModbusGUI(tkinter.Frame):
     
         #Text Field for response from server
         self.response = tkinter.StringVar
-        
         self.responseTextField = tkinter.Text(self,  width=35, height = 10)
+        scroll = Scrollbar(self, command=self.responseTextField.yview)
+        self.responseTextField.configure(yscrollcommand=scroll.set)
         self.responseTextField.insert(tkinter.END, "")
-        self.responseTextField.grid(row = 1, column = 5, rowspan=8, padx = 10)        
+        self.responseTextField.grid(row = 1, column = 5, rowspan=8, padx = 10) 
+        scroll.grid(row = 2, column = 6, rowspan=5, sticky=N+S+E)
+ 
            
     def onReverse(self):
         self.name.set(self.name.get()[::-1])
