@@ -4,13 +4,13 @@ Created on 12.09.2016
 
 @author: Stefan Rossmann
 '''
-import ModbusClient
+from ModbusClient import *
     
-modbusClient = ModbusClient.ModbusClient('127.0.0.1',502)
+modbusClient = ModbusClient('127.0.0.1',502)
 modbusClient.Connect()
 discreteInputs = modbusClient.ReadDiscreteInputs(0, 8)
 print (discreteInputs)
-
+modbusClient.Parity = Parity.even
 holdingRegisters = modbusClient.ReadHoldingRegisters(0, 8)
 print (holdingRegisters)
 inputRegisters = modbusClient.ReadInputRegisters(0, 8)

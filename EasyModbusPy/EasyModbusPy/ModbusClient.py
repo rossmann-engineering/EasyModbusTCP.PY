@@ -10,12 +10,20 @@ from builtins import int
 from _testcapi import instancemethod
 
 class ModbusClient(object):
-    '''
-    classdocs
-    '''  
-    
-    
+    """
+    Implementation of a Modbus TCP Client and a Modbsu RTU Master
+    """     
     def __init__(self, *params):
+        """
+        Constructor for Modbus RTU (serial line):
+        modbusClient = ModbusClient.ModbusClient('COM1')
+        First Parameter is the serial Port 
+        
+        Constructor for Modbus TCP:
+        modbusClient = ModbusClient.ModbusClient('127.0.0.1', 502)
+        First Parameter ist the IP-Address of the Server to connect to
+        Second Parameter is the Port the Server listens to
+        """
         self.__transactionIdentifier=0
         self._unitIdentifier = 1;
         self.ser = None
@@ -36,7 +44,10 @@ class ModbusClient(object):
             self._port = params[1]
             
             
-    def Connect(self):    
+    def Connect(self):
+        """
+        Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
+        """    
         if (self.ser is not None):   
             self.ser.port = self.serialPort
             self.ser._baudrate = self._baudrate
@@ -61,6 +72,9 @@ class ModbusClient(object):
         self.__connected = True
   
     def close(self):
+        """
+        Closes Serial port, or TCP-Socket connection
+        """
         if (self.ser is not None):
             self.ser.close()
         if (self.tcpClientSocket is not None):
@@ -70,6 +84,12 @@ class ModbusClient(object):
         
             
     def ReadDiscreteInputs(self, startingAddress, quantity):
+        """
+        Read Discrete Inputs from Master device (Function code 2)
+        startingAddress: First discrete input to be read
+        quantity: Numer of discrete Inputs to be read
+        returns: Boolean Array [0..quantity-1] which contains the discrete Inputs
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -140,6 +160,12 @@ class ModbusClient(object):
 
 
     def ReadCoils(self, startingAddress, quantity):
+        """
+        Read Coils from Master device (Function code 1)
+        startingAddress:  First coil to be read
+        quantity: Numer of coils to be read
+        returns:  Boolean Array [0..quantity-1] which contains the coils
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -211,6 +237,12 @@ class ModbusClient(object):
         
 
     def ReadHoldingRegisters(self, startingAddress, quantity):
+        """
+        Read Holding Registers from Master device (Function code 3)
+        startingAddress: First holding register to be read
+        quantity:  Number of holding registers to be read
+        returns:  Int Array [0..quantity-1] which contains the holding registers
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -272,6 +304,12 @@ class ModbusClient(object):
             return myList 
 
     def ReadInputRegisters(self, startingAddress, quantity):
+        """
+        Read Input Registers from Master device (Function code 4)
+        startingAddress :  First input register to be read
+        quantity:  Number of input registers to be read
+        returns:  Int Array [0..quantity-1] which contains the input registers
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -333,6 +371,11 @@ class ModbusClient(object):
             return myList 
         
     def WriteSingleCoil(self, startingAddress, value):
+        """
+        Write single Coil to Master device (Function code 5)
+        startingAddress: Coil to be written
+        value:  Coil Value to be written
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -395,6 +438,11 @@ class ModbusClient(object):
    
         
     def WriteSingleRegister(self, startingAddress, value):
+        """
+        Write single Register to Master device (Function code 6)
+        startingAddress:  Register to be written
+        value: Register Value to be written
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -452,6 +500,11 @@ class ModbusClient(object):
                 return True            
              
     def WriteMultipleCoils(self, startingAddress, values):
+        """
+        Write multiple coils to Master device (Function code 15)
+        startingAddress :  First coil to be written
+        values:  Coil Values [0..quantity-1] to be written
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -532,6 +585,11 @@ class ModbusClient(object):
            
 
     def WriteMultipleRegisters(self, startingAddress, values):
+        """
+        Write multiple registers to Master device (Function code 16)
+        startingAddress: First register to be written
+        values:  Register Values [0..quantity-1] to be written
+        """
         self.__transactionIdentifier+=1
         if (self.ser is not None):
             if (self.ser.closed):
@@ -610,56 +668,98 @@ class ModbusClient(object):
                 else:
                     crc = crc >> 1                 
         return crc
-    
-    def getPort(self):
+   
+    @property
+    def Port(self):
+        """
+        Gets the Port were the Modbus-TCP Server is reachable (Standard is 502)
+        """
         return self._port
     
-    def setPort(self, port):
+    @Port.setter
+    def Port(self, port):
+        """
+        Sets the Port were the Modbus-TCP Server is reachable (Standard is 502)
+        """
         self._port = port;
     
-    Port = property(getPort, setPort)
-    
-    def getIPAddress(self):
+    @property
+    def IPAddress(self):
+        """
+        Gets the IP-Address of the Server to be connected
+        """
         return self._ipAddress
     
-    def setIPAddress(self, ipAddress):
+    @IPAddress.setter
+    def IPAddress(self, ipAddress):
+        """
+        Sets the IP-Address of the Server to be connected
+        """
         self._ipAddress = ipAddress;   
-       
-    IPAddress = property(getIPAddress, setIPAddress)
     
-    def getUnitIdentifier(self):
+    @property
+    def UnitIdentifier(self):
+        """
+        Gets the Unit identifier in case of serial connection (Default = 1)
+        """
         return self._unitIdentifier
     
-    def setUnitIdentifier(self, unitIdentifier):
+    @UnitIdentifier.setter
+    def UnitIdentifier(self, unitIdentifier):
+        """
+        Sets the Unit identifier in case of serial connection (Default = 1)
+        """
         self._unitIdentifier = unitIdentifier
-
-    UnitIdentifier = property(getUnitIdentifier, setUnitIdentifier)
     
-    def getBaudrate(self):
+    @property
+    def Baudrate(self):
+        """
+        Gets the Baudrate for serial connection (Default = 9600)
+        """
         return self._baudrate
     
-    def setBaudrate(self, baudrate):
+    @Baudrate.setter
+    def Baudrate(self, baudrate):
+        """
+        Sets the Baudrate for serial connection (Default = 9600)
+        """
         self._baudrate = baudrate
-        
-    Baudrate = property(getBaudrate, setBaudrate)
     
-    def getParity(self):
+    @property
+    def Parity(self):
+        """
+        Gets the of Parity in case of serial connection
+        """
         return self._parity
     
-    def setParity(self, parity):
+    @Parity.setter
+    def Parity(self, parity):
+        """
+        Sets the of Parity in case of serial connection
+        Example modbusClient.Parity = Parity.even
+        """
         self._parity = parity
-        
-    Parity = property(getParity, setParity)
     
-    def getStopbits(self):
+    @property
+    def Stopbits(self):
+        """
+        Gets the number of stopbits in case of serial connection
+        """
         return self._stopbits
     
-    def setStopbits(self, stopbits):
+    @Stopbits.setter
+    def Stopbits(self, stopbits):
+        """
+        Sets the number of stopbits in case of serial connection
+        Example: modbusClient.Stopbits = Stopbits.one
+        """
         self._stopbits = stopbits
         
-    Stopbits = property(getStopbits, setStopbits)
     
     def isConnected(self):
+        """
+        Returns true if a connection has been established
+        """
         return self.__connected
     
     
