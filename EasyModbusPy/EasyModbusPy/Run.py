@@ -6,11 +6,16 @@ Created on 12.09.2016
 '''
 from ModbusClient import *
     
-modbusClient = ModbusClient('192.168.178.99', 502)
+modbusClient = ModbusClient('/dev/ttyUSB0')
+modbusClient.Parity = Parity.odd
+modbusClient.UnitIdentifier = 1
+modbusClient.Baudrate = 9600
+modbusClient.Stopbits = Stopbits.one
 modbusClient.Connect()
+modbusClient.Parity = Parity.even
 discreteInputs = modbusClient.ReadDiscreteInputs(0, 8)
 print (discreteInputs)
-modbusClient.Parity = Parity.even
+
 holdingRegisters = modbusClient.ReadHoldingRegisters(0, 8)
 print (holdingRegisters)
 inputRegisters = modbusClient.ReadInputRegisters(0, 8)

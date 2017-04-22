@@ -52,11 +52,6 @@ class ModbusClient(object):
         """    
         if (self.ser is not None): 
             serial = importlib.import_module("serial")  
-            self.ser.port = self.serialPort
-            self.ser._baudrate = self._baudrate
-            self._stopbits = Stopbits.one
-            self.ser.timeout = 1
-            self._parity = Parity.none
             if self._stopbits == 0:               
                 self.ser.stopbits = serial.STOPBITS_ONE
             elif self._stopbits == 1:               
@@ -66,10 +61,11 @@ class ModbusClient(object):
             if self._parity == 0:               
                 self.ser.parity = serial.PARITY_EVEN
             elif self._parity == 1:               
-                self.ser.parity = serial.PARITY_EVEN
+                self.ser.parity = serial.PARITY_ODD
             elif self._parity == 2:               
-                self.ser.parity = serial.PARITY_EVEN 
-            self.ser.open()
+                self.ser.parity = serial.PARITY_NONE 
+            self.ser = serial.Serial(self.serialPort, self._baudrate, timeout=1, parity=self.ser.parity, stopbits=self.ser.stopbits, xonxoff=0, rtscts=0)
+        #print (self.ser)
         if (self.tcpClientSocket is not None):  
             self.tcpClientSocket.connect((self._ipAddress, self._port))
         self.__connected = True
