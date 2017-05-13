@@ -102,7 +102,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
@@ -178,7 +178,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
@@ -255,7 +255,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
@@ -322,7 +322,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         quatityLSB = quantity&0xFF
         quatityMSB = (quantity&0xFF00) >> 8
         if (self.ser is not None):
@@ -386,7 +386,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         if value:
             valueLSB = 0x00
             valueMSB = (0xFF00) >> 8
@@ -453,7 +453,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         valueLSB = value&0xFF
         valueMSB = (value&0xFF00) >> 8
         if (self.ser is not None):
@@ -515,7 +515,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         quantityLSB = len(values)&0xFF
         quantityMSB = (len(values)&0xFF00) >> 8
         valueToWrite = list()
@@ -600,7 +600,7 @@ class ModbusClient(object):
         lengthLSB = length&0xFF
         lengthMSB = (length&0xFF00) >> 8
         startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = startingAddress&0xFF00 >> 8
+        startingAddressMSB = (startingAddress&0xFF00) >> 8
         quantityLSB = len(values)&0xFF
         quantityMSB = (len(values)&0xFF00) >> 8
         valueToWrite = list()
