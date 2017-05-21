@@ -7,8 +7,11 @@ Created on 12.09.2016
 import importlib
 import Exceptions
 import socket
+import struct
 from builtins import int
 from _testcapi import instancemethod
+from test.test_array import SIGNED_INT16_BE
+from tkinter import DoubleVar
 
 class ModbusClient(object):
     """
@@ -773,3 +776,51 @@ class Stopbits():
     one = 0
     two = 1
     onePointFive = 2
+      
+    """
+    Convert 32 Bit Value to two 16 Bit Value to send as Modbus Registers
+    doubleValue: Value to be converted
+    return: 16 Bit Register values int[]
+    """  
+def ConvertDoubleToTwoRegisters(doubleValue: int) -> list:
+    myList = list()
+    myList.append(int(doubleValue & 0x0000FFFF))         #Append Least Significant Word      
+    myList.append(int((doubleValue & 0xFFFF0000)>>16))   #Append Most Significant Word      
+
+    return myList
+    
+    """
+    Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers
+    floatValue: Value to be converted
+    return: 16 Bit Register values int[]
+    """  
+def ConvertFloatToTwoRegisters(floatValue: float) -> list:
+    myList = list()
+    s = struct.pack('<f', floatValue)       #little endian
+    myList.append(s[0] | (s[1]<<8))         #Append Least Significant Word  
+    myList.append(s[2] | (s[3]<<8))         #Append Most Significant Word      
+
+    return myList
+
+    """
+    Convert two 16 Bit Registers to 32 Bit long value - Used to receive 32 Bit values from Modbus (Modbus Registers are 16 Bit long)
+    registers: 16 Bit Registers
+    return: 32 bit value
+    """  
+def ConvertRegistersToDouble(registers: list) -> int:
+    returnValue = (int(registers[0]) & 0x0000FFFF) | (int((registers[1])<<16) & 0xFFFF0000)
+    return returnValue
+
+    """
+    Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
+    registers: 16 Bit Registers
+    return: 32 bit value real
+    """  
+def ConvertRegistersToFloat(registers: list) -> float:
+    b = bytearray(4)
+    b [0] = registers[0] & 0xff
+    b [1] = (registers[0] & 0xff00)>>8 
+    b [2] = (registers[1] & 0xff)
+    b [3] = (registers[1] & 0xff00)>>8
+    returnValue = struct.unpack('<f', b)            #little Endian
+    return returnValue
