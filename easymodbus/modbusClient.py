@@ -3,7 +3,6 @@ Created on 12.09.2016
 
 @author: Stefan Rossmann
 '''
-#import serial
 import importlib
 import easymodbus.modbusException as Exceptions
 import socket
@@ -28,70 +27,70 @@ class ModbusClient(object):
         """
         self.__receivedata = bytearray()
         self.__transactionIdentifier=0
-        self._unitIdentifier = 1;
-        self._timeout = 5
-        self.ser = None
-        self.tcpClientSocket = None
+        self.__unitIdentifier = 1
+        self.__timeout = 5
+        self.__ser = None
+        self.__tcpClientSocket = None
         self.__connected = False
         #Constructor for RTU
         if len(params) == 1 & isinstance(params[0], str):
             serial = importlib.import_module("serial")
             self.serialPort = params[0]
-            self._baudrate = 9600
-            self._parity = Parity.even
-            self._stopbits = Stopbits.one
+            self.__baudrate = 9600
+            self.__parity = Parity.even
+            self.__stopbits = Stopbits.one
             self.__transactionIdentifier = 0
-            self.ser = serial.Serial()
+            self.__ser = serial.Serial()
            
         #Constructor for TCP
         elif (len(params) == 2) & isinstance(params[0], str) & isinstance(params[1], int):
-            self.tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self._ipAddress = params[0]
-            self._port = params[1]
+            self.__tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.__ipAddress = params[0]
+            self.__port = params[1]
             
             
     def connect(self):
         """
         Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
         """    
-        if (self.ser is not None): 
+        if (self.__ser is not None):
             serial = importlib.import_module("serial")
-            if self._stopbits == 0:               
-                self.ser.stopbits = serial.STOPBITS_ONE
-            elif self._stopbits == 1:               
-                self.ser.stopbits = serial.STOPBITS_TWO
-            elif self._stopbits == 2:               
-                self.ser.stopbits = serial.STOPBITS_ONE_POINT_FIVE         
-            if self._parity == 0:               
-                self.ser.parity = serial.PARITY_EVEN
-            elif self._parity == 1:               
-                self.ser.parity = serial.PARITY_ODD
-            elif self._parity == 2:               
-                self.ser.parity = serial.PARITY_NONE 
+            if self.__stopbits == 0:
+                self.__ser.stopbits = serial.STOPBITS_ONE
+            elif self.__stopbits == 1:
+                self.__ser.stopbits = serial.STOPBITS_TWO
+            elif self.__stopbits == 2:
+                self.__ser.stopbits = serial.STOPBITS_ONE_POINT_FIVE
+            if self.__parity == 0:
+                self.__ser.parity = serial.PARITY_EVEN
+            elif self.__parity == 1:
+                self.__ser.parity = serial.PARITY_ODD
+            elif self.__parity == 2:
+                self.__ser.parity = serial.PARITY_NONE
 
-            self.ser = serial.Serial(self.serialPort, self._baudrate, timeout=self._timeout, parity=self.ser.parity, stopbits=self.ser.stopbits, xonxoff=0, rtscts=0)
-            self.ser.writeTimeout = self._timeout
+            self.__ser = serial.Serial(self.serialPort, self.__baudrate, timeout=self.__timeout, parity=self.__ser.parity, stopbits=self.__ser.stopbits, xonxoff=0, rtscts=0)
+            self.__ser.writeTimeout = self.__timeout
         #print (self.ser)
-        if (self.tcpClientSocket is not None):
-            self.tcpClientSocket.settimeout(5)
-            self.tcpClientSocket.connect((self._ipAddress, self._port))
+        if (self.__tcpClientSocket is not None):
+            self.__tcpClientSocket.settimeout(5)
+            self.__tcpClientSocket.connect((self.__ipAddress, self.__port))
 
             self.__connected = True
-            self.__thread = threading.Thread(target=self.listen, args=())
+            self.__thread = threading.Thread(target=self.__listen, args=())
             self.__thread.start()
 
 
 
-    def listen(self):
+    def __listen(self):
         self.__stoplistening = False
         self.__receivedata = bytearray()
         try:
             while (not self.__stoplistening):
                 if (len(self.__receivedata)==0):
                     self.__receivedata = bytearray()
-                    self._timeout = 500
-                    if (self.tcpClientSocket is not None):
-                        self.__receivedata=self.tcpClientSocket.recv(256)
+                    self.__timeout = 500
+                    if (self.__tcpClientSocket is not None):
+                        self.__receivedata=self.__tcpClientSocket.recv(256)
         except socket.timeout:
             self.__receivedata = None
 
@@ -99,67 +98,67 @@ class ModbusClient(object):
         """
         Closes Serial port, or TCP-Socket connection
         """
-        if (self.ser is not None):
-            self.ser.close()
-        if (self.tcpClientSocket is not None):
+        if (self.__ser is not None):
+            self.__ser.close()
+        if (self.__tcpClientSocket is not None):
             self.__stoplistening = True
-            self.tcpClientSocket.shutdown(socket.SHUT_RDWR)
-            self.tcpClientSocket.close()
+            self.__tcpClientSocket.shutdown(socket.SHUT_RDWR)
+            self.__tcpClientSocket.close()
         self.__connected = False
         
             
-    def read_discreteinputs(self, startingAddress, quantity):
+    def read_discreteinputs(self, starting_address, quantity):
         """
         Read Discrete Inputs from Master device (Function code 2)
-        startingAddress: First discrete input to be read
+        starting_address: First discrete input to be read
         quantity: Numer of discrete Inputs to be read
         returns: Boolean Array [0..quantity-1] which contains the discrete Inputs
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        if ((startingAddress > 65535) | (quantity >2000)):
+        if ((starting_address > 65535) | (quantity >2000)):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 2000");
-        functionCode = 2
+        function_code = 2
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
-        quatityLSB = quantity&0xFF
-        quatityMSB = (quantity&0xFF00) >> 8
-        if (self.ser is not None):
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
-            CRC = self.__calculateCRC(data, len(data)-2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data[6] = CrcLSB
-            data[7] = CrcMSB
-            self.ser.write(data)
+        transaction_identifier_lsb = self.__transactionIdentifier & 0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier & 0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address & 0xFF
+        starting_address_msb = (starting_address & 0xFF00) >> 8
+        quantity_lsb = quantity & 0xFF
+        quantity_msb = (quantity & 0xFF00) >> 8
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb, 0, 0])
+            crc = self.__calculateCRC(data, len(data)-2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data[6] = crcLSB
+            data[7] = crcMSB
+            self.__ser.write(data)
             if (quantity % 8 != 0):
-                bytesToRead = 6+int(quantity/8)
+                bytes_to_read = 6+int(quantity/8)
             else:
-                bytesToRead = 5+int(quantity/8)
-            data = self.ser.read(bytesToRead)
+                bytes_to_read = 5+int(quantity/8)
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x82) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x82) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x82) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x82) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
             myList = list()
             for i in range(0, quantity):
@@ -168,15 +167,15 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
-            self.tcpClientSocket.send(data)
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb])
+            self.__tcpClientSocket.send(data)
             self.__receivedata = bytearray()
             if (quantity % 8 != 0):
-                bytesToRead = 9+int(quantity/8)
+                bytes_to_read = 9+int(quantity/8)
             else:
-                bytesToRead = 8+int(quantity/8)
+                bytes_to_read = 8+int(quantity/8)
             try:
                 while (len(self.__receivedata) == 0):
                     pass
@@ -186,9 +185,9 @@ class ModbusClient(object):
             data = bytearray(self.__receivedata)
             
             if ((data[1 + 6] == 0x82) & (data[2 + 6] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1 + 6] == 0x82) & (data[2+6] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1 + 6] == 0x82) & (data[2+6] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1 + 6] == 0x82) & (data[2+6] == 0x04)):
@@ -200,58 +199,58 @@ class ModbusClient(object):
 
 
 
-    def read_coils(self, startingAddress, quantity):
+    def read_coils(self, starting_address, quantity):
         """
         Read Coils from Master device (Function code 1)
-        startingAddress:  First coil to be read
+        starting_address:  First coil to be read
         quantity: Numer of coils to be read
         returns:  Boolean Array [0..quantity-1] which contains the coils
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        if ((startingAddress > 65535) | (quantity >2000)):
+        if ((starting_address > 65535) | (quantity>2000)):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 2000");
-        functionCode = 1
+        function_code = 1
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
-        quatityLSB = quantity&0xFF
-        quatityMSB = (quantity&0xFF00) >> 8
-        if (self.ser is not None):
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
-            CRC = self.__calculateCRC(data, len(data)-2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data[6] = CrcLSB
-            data[7] = CrcMSB
-            self.ser.write(data)
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
+        quantity_lsb = quantity&0xFF
+        quantity_msb = (quantity&0xFF00) >> 8
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb, 0, 0])
+            crc = self.__calculateCRC(data, len(data)-2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data[6] = crcLSB
+            data[7] = crcMSB
+            self.__ser.write(data)
             if (quantity % 8 != 0):
-                bytesToRead = 6+int(quantity/8)
+                bytes_to_read = 6+int(quantity/8)
             else:
-                bytesToRead = 5+int(quantity/8)
-            data = self.ser.read(bytesToRead)
+                bytes_to_read = 5+int(quantity/8)
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x81) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x81) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x81) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x81) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
             myList = list()
             for i in range(0, quantity):
@@ -260,15 +259,15 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
-            self.tcpClientSocket.send(data)
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb])
+            self.__tcpClientSocket.send(data)
             self.__receivedata = bytearray()
             if (quantity % 8 != 0):
-                bytesToRead = 10+int(quantity/8)
+                bytes_to_read = 10+int(quantity/8)
             else:
-                bytesToRead = 9+int(quantity/8)
+                bytes_to_read = 9+int(quantity/8)
             try:
                 while (len(self.__receivedata) == 0):
                     pass
@@ -276,9 +275,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1 + 6] == 0x82) & (data[2 + 6] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1 + 6] == 0x82) & (data[2+6] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1 + 6] == 0x82) & (data[2+6] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1 + 6] == 0x82) & (data[2+6] == 0x04)):
@@ -291,60 +290,60 @@ class ModbusClient(object):
         
         
 
-    def read_holdingregisters(self, startingAddress, quantity):
+    def read_holdingregisters(self, starting_address, quantity):
         """
         Read Holding Registers from Master device (Function code 3)
-        startingAddress: First holding register to be read
+        starting_address: First holding register to be read
         quantity:  Number of holding registers to be read
         returns:  Int Array [0..quantity-1] which contains the holding registers
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        if ((startingAddress > 65535) | (quantity >125)):
+        if ((starting_address > 65535) | (quantity >125)):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 125");
-        functionCode = 3
+        function_code = 3
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
-        quatityLSB = quantity&0xFF
-        quatityMSB = (quantity&0xFF00) >> 8
-        if (self.ser is not None):
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
+        quantity_lsb = quantity&0xFF
+        quantity_msb = (quantity&0xFF00) >> 8
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb, 0, 0])
 
-            CRC = self.__calculateCRC(data, len(data)-2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data[6] = CrcLSB
-            data[7] = CrcMSB
+            crc = self.__calculateCRC(data, len(data)-2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data[6] = crcLSB
+            data[7] = crcMSB
 
 
-            self.ser.write(data)
-            bytesToRead = 5+int(quantity*2)
-            data = self.ser.read(bytesToRead)
+            self.__ser.write(data)
+            bytes_to_read = 5+int(quantity*2)
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
 
 
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x83) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x83) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x83) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x83) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
 
             myList = list()
@@ -354,11 +353,11 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
-            self.tcpClientSocket.send(data)
-            bytesToRead = 9+int(quantity*2)
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb])
+            self.__tcpClientSocket.send(data)
+            bytes_to_read = 9+int(quantity*2)
             self.__receivedata = bytearray()
             try:
                 while (len(self.__receivedata) == 0):
@@ -367,9 +366,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1+6] == 0x83) & (data[2+6] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1+6] == 0x83) & (data[2+6] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1+6] == 0x83) & (data[2+6] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1+6] == 0x83) & (data[2+6] == 0x04)):
@@ -379,60 +378,60 @@ class ModbusClient(object):
                 myList.append((data[i*2+3+6]<<8) +data[i*2+4+6])            
             return myList 
 
-    def read_inputregisters(self, startingAddress, quantity):
+    def read_inputregisters(self, starting_address, quantity):
         """
         Read Input Registers from Master device (Function code 4)
-        startingAddress :  First input register to be read
+        starting_address :  First input register to be read
         quantity:  Number of input registers to be read
         returns:  Int Array [0..quantity-1] which contains the input registers
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened");
-        if (startingAddress > 65535) | (quantity >125):
+        if (starting_address > 65535) | (quantity >125):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 125");
-        functionCode = 4
+        function_code = 4
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
-        quatityLSB = quantity&0xFF
-        quatityMSB = (quantity&0xFF00) >> 8
-        if (self.ser is not None):
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB,0,0] )
-            CRC = self.__calculateCRC(data, len(data)-2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data[6] = CrcLSB
-            data[7] = CrcMSB
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
+        quantity_lsb = quantity&0xFF
+        quantity_msb = (quantity&0xFF00) >> 8
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb, 0, 0])
+            crc = self.__calculateCRC(data, len(data)-2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data[6] = crcLSB
+            data[7] = crcMSB
 
 
-            self.ser.write(data)
-            bytesToRead = 5+int(quantity*2)
+            self.__ser.write(data)
+            bytes_to_read = 5+int(quantity*2)
 
-            data = self.ser.read(bytesToRead)
+            data = self.__ser.read(bytes_to_read)
 
             b=bytearray(data)
             data = b
 
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError("Read timeout Exception")
             if ((data[1] == 0x84) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x84) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x84) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x84) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
             myList = list()
             for i in range(0, quantity):
@@ -441,11 +440,11 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,quatityMSB,quatityLSB] )
-            self.tcpClientSocket.send(data)
-            bytesToRead = 9+int(quantity*2)
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantity_msb, quantity_lsb])
+            self.__tcpClientSocket.send(data)
+            bytes_to_read = 9+int(quantity*2)
             self.__receivedata = bytearray()
             try:
                 while (len(self.__receivedata) == 0):
@@ -454,9 +453,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1+6] == 0x84) & (data[2+6] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1+6] == 0x84) & (data[2+6] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1+6] == 0x84) & (data[2+6] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1+6] == 0x84) & (data[2+6] == 0x04)):
@@ -466,69 +465,69 @@ class ModbusClient(object):
                 myList.append((data[i*2+3+6]<<8) +data[i*2+4+6])            
             return myList 
         
-    def write_single_coil(self, startingAddress, value):
+    def write_single_coil(self, starting_address, value):
         """
         Write single Coil to Master device (Function code 5)
-        startingAddress: Coil to be written
+        starting_address: Coil to be written
         value:  Coil Value to be written
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        functionCode = 5
+        function_code = 5
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
         if value:
             valueLSB = 0x00
             valueMSB = (0xFF00) >> 8
         else:
             valueLSB = 0x00
             valueMSB = (0x00) >> 8
-        if (self.ser is not None):
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB,0,0] )
-            CRC = self.__calculateCRC(data, len(data)-2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data[6] = CrcLSB
-            data[7] = CrcMSB
-            self.ser.write(data)
-            bytesToRead = 8
-            data = self.ser.read(bytesToRead)
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, valueMSB, valueLSB, 0, 0])
+            crc = self.__calculateCRC(data, len(data)-2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data[6] = crcLSB
+            data[7] = crcMSB
+            self.__ser.write(data)
+            bytes_to_read = 8
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x85) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x85) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Address invalid");
+                raise Exceptions.starting_addressInvalidException("Address invalid");
             if ((data[1] == 0x85) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("Value invalid");
             if ((data[1] == 0x85) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
-            if data[1] == self._unitIdentifier:
+            if data[1] == self.__unitIdentifier:
                 return True 
             else:
                 return False  
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB] )
-            self.tcpClientSocket.send(data)
-            bytesToRead = 12
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, valueMSB, valueLSB])
+            self.__tcpClientSocket.send(data)
+            bytes_to_read = 12
             self.__receivedata = bytearray()
             try:
                 while (len(self.__receivedata) == 0):
@@ -537,9 +536,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1+6] == 0x85) & (data[2+6] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1+6] == 0x85) & (data[2+6] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Address invalid");
+                raise Exceptions.starting_addressInvalidException("Address invalid");
             if ((data[1+6] == 0x85) & (data[2+6] == 0x03)):
                 raise Exceptions.QuantityInvalidException("Value invalid");
             if ((data[1+6] == 0x85) & (data[2+6] == 0x04)):
@@ -548,68 +547,68 @@ class ModbusClient(object):
                 return True 
    
         
-    def write_single_register(self, startingAddress, value):
+    def write_single_register(self, starting_address, value):
         """
         Write single Register to Master device (Function code 6)
-        startingAddress:  Register to be written
+        starting_address:  Register to be written
         value: Register Value to be written
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
-        functionCode = 6
+        function_code = 6
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
         valueLSB = value&0xFF
         valueMSB = (value&0xFF00) >> 8
-        if (self.ser is not None):
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB,0,0] )
-            CRC = self.__calculateCRC(data, len(data)-2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data[6] = CrcLSB
-            data[7] = CrcMSB
-            self.ser.write(data)
-            bytesToRead = 8
-            data = self.ser.read(bytesToRead)
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, valueMSB, valueLSB, 0, 0])
+            crc = self.__calculateCRC(data, len(data)-2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data[6] = crcLSB
+            data[7] = crcMSB
+            self.__ser.write(data)
+            bytes_to_read = 8
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
             #Check for Exception
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x86) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x86) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Register address invalid");
+                raise Exceptions.starting_addressInvalidException("Register address invalid");
             if ((data[1] == 0x86) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("Invalid Register Value");
             if ((data[1] == 0x86) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
 
 
-            if data[1] == self._unitIdentifier:
+            if data[1] == self.__unitIdentifier:
                 return True 
             else:
                 return False   
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB,valueMSB,valueLSB] )
-            self.tcpClientSocket.send(data)
-            bytesToRead = 12
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, valueMSB, valueLSB])
+            self.__tcpClientSocket.send(data)
+            bytes_to_read = 12
             self.__receivedata = bytearray()
             try:
                 while (len(self.__receivedata) == 0):
@@ -618,9 +617,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1+6] == 0x86) & (data[2+6] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1+6] == 0x86) & (data[2+6] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Register address invalid");
+                raise Exceptions.starting_addressInvalidException("Register address invalid");
             if ((data[1+6] == 0x86) & (data[2+6] == 0x03)):
                 raise Exceptions.QuantityInvalidException("Invalid Register Value");
             if ((data[1+6] == 0x86) & (data[2+6] == 0x04)):
@@ -628,24 +627,24 @@ class ModbusClient(object):
 
                 return True            
              
-    def write_multiple_coils(self, startingAddress, values):
+    def write_multiple_coils(self, starting_address, values):
         """
         Write multiple coils to Master device (Function code 15)
-        startingAddress :  First coil to be written
+        starting_address :  First coil to be written
         values:  Coil Values [0..quantity-1] to be written
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened");
-        functionCode = 15
+        function_code = 15
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
         quantityLSB = len(values)&0xFF
         quantityMSB = (len(values)&0xFF00) >> 8
         valueToWrite = list()
@@ -663,52 +662,52 @@ class ModbusClient(object):
             singleCoilValue = ((coilValue)<<(i%8) | (singleCoilValue));
  
         valueToWrite.append(singleCoilValue)
-        if (self.ser is not None):    
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantityMSB, quantityLSB])
             data.append(len(valueToWrite))   #Bytecount 
             for i in range (0, len(valueToWrite)):
                 data.append(valueToWrite[i]&0xFF)      
           
-            CRC = self.__calculateCRC(data, len(data), 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data.append(CrcLSB)
-            data.append(CrcMSB)
-            self.ser.write(data)
-            bytesToRead = 8
-            data = self.ser.read(bytesToRead)
+            crc = self.__calculateCRC(data, len(data), 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data.append(crcLSB)
+            data.append(crcMSB)
+            self.__ser.write(data)
+            bytes_to_read = 8
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x8F) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x8F) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x8F) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x8F) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
-            if data[1] == self._unitIdentifier:
+            if data[1] == self.__unitIdentifier:
                 return True 
             else:
                 return False 
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantityMSB, quantityLSB])
             data.append(len(valueToWrite))   #Bytecount 
             for i in range (0, len(valueToWrite)):
                 data.append(valueToWrite[i]&0xFF)      
-            self.tcpClientSocket.send(data)
-            bytesToRead = 12
+            self.__tcpClientSocket.send(data)
+            bytes_to_read = 12
             self.__receivedata = bytearray()
             try:
                 while (len(self.__receivedata) == 0):
@@ -717,9 +716,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1] == 0x8F) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x8F) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x8F) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x8F) & (data[2] == 0x04)):
@@ -728,77 +727,77 @@ class ModbusClient(object):
             return True 
            
 
-    def write_multiple_registers(self, startingAddress, values):
+    def write_multiple_registers(self, starting_address, values):
         """
         Write multiple registers to Master device (Function code 16)
-        startingAddress: First register to be written
+        starting_address: First register to be written
         values:  Register Values [0..quantity-1] to be written
         """
         self.__transactionIdentifier+=1
-        if (self.ser is not None):
-            if (self.ser.closed):
+        if (self.__ser is not None):
+            if (self.__ser.closed):
                 raise Exception.SerialPortNotOpenedException("serial port not opened");
-        functionCode = 16
+        function_code = 16
         length = 6;
-        transactionIdentifierLSB = self.__transactionIdentifier&0xFF
-        transactionIdentifierMSB = ((self.__transactionIdentifier&0xFF00) >> 8)
-        lengthLSB = length&0xFF
-        lengthMSB = (length&0xFF00) >> 8
-        startingAddressLSB = startingAddress&0xFF
-        startingAddressMSB = (startingAddress&0xFF00) >> 8
+        transaction_identifier_lsb = self.__transactionIdentifier&0xFF
+        transaction_identifier_msb = ((self.__transactionIdentifier&0xFF00) >> 8)
+        length_lsb = length&0xFF
+        length_msb = (length&0xFF00) >> 8
+        starting_address_lsb = starting_address&0xFF
+        starting_address_msb = (starting_address&0xFF00) >> 8
         quantityLSB = len(values)&0xFF
         quantityMSB = (len(values)&0xFF00) >> 8
         valueToWrite = list()
         for i in range(0, len(values)):
             valueToWrite.append(values[i]);    
-        if (self.ser is not None):       
-            data = bytearray([self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+        if (self.__ser is not None):
+            data = bytearray([self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantityMSB, quantityLSB])
             data.append(len(valueToWrite)*2)   #Bytecount 
             for i in range (0, len(valueToWrite)):                 
                 data.append((valueToWrite[i]&0xFF00) >> 8) 
                 data.append(valueToWrite[i]&0xFF) 
-            CRC = self.__calculateCRC(data, len(data), 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            data.append(CrcLSB)
-            data.append(CrcMSB)
-            self.ser.write(data)
-            bytesToRead = 8
-            data = self.ser.read(bytesToRead)
+            crc = self.__calculateCRC(data, len(data), 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            data.append(crcLSB)
+            data.append(crcMSB)
+            self.__ser.write(data)
+            bytes_to_read = 8
+            data = self.__ser.read(bytes_to_read)
             b=bytearray(data)
             data = b
-            if (len(data) < bytesToRead):
+            if (len(data) < bytes_to_read):
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if ((data[1] == 0x90) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x90) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x90) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x90) & (data[2] == 0x04)):
                 raise Exceptions.ModbusException("error reading");
-            CRC = self.__calculateCRC(data, len(data) - 2, 0)
-            CrcLSB = CRC&0xFF
-            CrcMSB = (CRC&0xFF00) >> 8
-            if ((CrcLSB != data[len(data)-2]) & (CrcMSB != data[len(data)-1])):
+            crc = self.__calculateCRC(data, len(data) - 2, 0)
+            crcLSB = crc&0xFF
+            crcMSB = (crc&0xFF00) >> 8
+            if ((crcLSB != data[len(data)-2]) & (crcMSB != data[len(data)-1])):
                 raise Exceptions.CRCCheckFailedException("CRC check failed");
-            if data[1] == self._unitIdentifier:
+            if data[1] == self.__unitIdentifier:
                 return True 
             else:
                 return False     
         else:
             protocolIdentifierLSB = 0x00;
             protocolIdentifierMSB = 0x00;
-            lengthLSB = 0x06;
-            lengthMSB = 0x00;
-            data = bytearray([transactionIdentifierMSB, transactionIdentifierLSB, protocolIdentifierMSB, protocolIdentifierLSB,lengthMSB,lengthLSB,self._unitIdentifier, functionCode, startingAddressMSB, startingAddressLSB, quantityMSB, quantityLSB] )
+            length_lsb = 0x06;
+            length_msb = 0x00;
+            data = bytearray([transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB, length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb, starting_address_lsb, quantityMSB, quantityLSB])
             data.append(len(valueToWrite)*2)   #Bytecount 
             for i in range (0, len(valueToWrite)):                 
                 data.append((valueToWrite[i]&0xFF00) >> 8) 
                 data.append(valueToWrite[i]&0xFF) 
             
-            self.tcpClientSocket.send(data)
-            bytesToRead = 12
+            self.__tcpClientSocket.send(data)
+            bytes_to_read = 12
             self.__receivedata = bytearray()
             try:
                 while (len(self.__receivedata) == 0):
@@ -807,9 +806,9 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
             if ((data[1] == 0x90) & (data[2] == 0x01)):
-                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master");
+                raise Exceptions.function_codeNotSupportedException("Function code not supported by master");
             if ((data[1] == 0x90) & (data[2] == 0x02)):
-                raise Exceptions.StartingAddressInvalidException("Starting address invalid or starting address + quantity invalid");
+                raise Exceptions.starting_addressInvalidException("Starting address invalid or starting address + quantity invalid");
             if ((data[1] == 0x90) & (data[2] == 0x03)):
                 raise Exceptions.QuantityInvalidException("quantity invalid");
             if ((data[1] == 0x90) & (data[2] == 0x04)):
@@ -833,63 +832,63 @@ class ModbusClient(object):
         """
         Gets the Port were the Modbus-TCP Server is reachable (Standard is 502)
         """
-        return self._port
+        return self.__port
     
     @port.setter
     def port(self, port):
         """
         Sets the Port were the Modbus-TCP Server is reachable (Standard is 502)
         """
-        self._port = port;
+        self.__port = port;
     
     @property
     def ipaddress(self):
         """
         Gets the IP-Address of the Server to be connected
         """
-        return self._ipAddress
+        return self.__ipAddress
     
     @ipaddress.setter
     def ipaddress(self, ipAddress):
         """
         Sets the IP-Address of the Server to be connected
         """
-        self._ipAddress = ipAddress;   
+        self.__ipAddress = ipAddress;
     
     @property
     def unitidentifier(self):
         """
         Gets the Unit identifier in case of serial connection (Default = 1)
         """
-        return self._unitIdentifier
+        return self.__unitIdentifier
     
     @unitidentifier.setter
     def unitidentifier(self, unitIdentifier):
         """
         Sets the Unit identifier in case of serial connection (Default = 1)
         """
-        self._unitIdentifier = unitIdentifier
+        self.__unitIdentifier = unitIdentifier
     
     @property
     def baudrate(self):
         """
         Gets the Baudrate for serial connection (Default = 9600)
         """
-        return self._baudrate
+        return self.__baudrate
     
     @baudrate.setter
     def baudrate(self, baudrate):
         """
         Sets the Baudrate for serial connection (Default = 9600)
         """
-        self._baudrate = baudrate
+        self.__baudrate = baudrate
     
     @property
     def parity(self):
         """
         Gets the of Parity in case of serial connection
         """
-        return self._parity
+        return self.__parity
     
     @parity.setter
     def parity(self, parity):
@@ -897,14 +896,14 @@ class ModbusClient(object):
         Sets the of Parity in case of serial connection
         Example modbusClient.Parity = Parity.even
         """
-        self._parity = parity
+        self.__parity = parity
     
     @property
     def stopbits(self):
         """
         Gets the number of stopbits in case of serial connection
         """
-        return self._stopbits
+        return self.__stopbits
     
     @stopbits.setter
     def stopbits(self, stopbits):
@@ -912,21 +911,21 @@ class ModbusClient(object):
         Sets the number of stopbits in case of serial connection
         Example: modbusClient.Stopbits = Stopbits.one
         """
-        self._stopbits = stopbits
+        self.__stopbits = stopbits
     
     @property
     def timeout(self):
         """
         Gets the Timeout
         """
-        return self._timeout
+        return self.__timeout
         
     @timeout.setter
     def timeout(self, timeout):
         """
         Sets the Timeout
         """
-        self._timeout = timeout
+        self.__timeout = timeout
         
     
     def is_connected(self):
