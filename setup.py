@@ -8,13 +8,13 @@ from distutils.core import setup
 # read the contents of your README file
 from os import path
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.txt'), encoding='utf-8') as f:
+with open(path.join(this_directory, 'README.txt')) as f:
     long_description = f.read()
 
 setup(
     name='EasyModbus',
     packages = ['easymodbus'],
-    version      = '1.2.4',
+    version      = '1.2.6',
     license      = 'GPLv3',
     author       = 'Stefan Rossmann',
     author_email = 'info@rossmann-engineering.de',
