@@ -4,10 +4,12 @@ Created on 14.09.2016
 @author: Stefan Rossmann
 '''
 
+
 class ModbusException(Exception):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if Modbus Server returns error code "Function Code not executed (0x04)"
         Attributes:
@@ -15,12 +17,14 @@ class ModbusException(Exception):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message     
-        
+        self.message = message
+
+
 class SerialPortNotOpenedException(ModbusException):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if serial port is not opened
         Attributes:
@@ -28,13 +32,14 @@ class SerialPortNotOpenedException(ModbusException):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message   
-        
-        
+        self.message = message
+
+
 class ConnectionException(ModbusException):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if Connection to Modbus device failed
         Attributes:
@@ -42,12 +47,14 @@ class ConnectionException(ModbusException):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message     
-        
+        self.message = message
+
+
 class FunctionCodeNotSupportedException(ModbusException):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if Modbus Server returns error code "Function code not supported"
         Attributes:
@@ -55,12 +62,14 @@ class FunctionCodeNotSupportedException(ModbusException):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message 
-        
+        self.message = message
+
+
 class QuantityInvalidException(ModbusException):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if Modbus Server returns error code "quantity invalid"
         Attributes:
@@ -68,12 +77,14 @@ class QuantityInvalidException(ModbusException):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message 
-        
+        self.message = message
+
+
 class StartingAddressInvalidException(ModbusException):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if Modbus Server returns error code "starting adddress and quantity invalid"
         Attributes:
@@ -81,13 +92,14 @@ class StartingAddressInvalidException(ModbusException):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message 
-        
-        
+        self.message = message
+
+
 class CRCCheckFailedException(ModbusException):
     '''
     classdocs
     '''
+
     def __init__(self, expression, message):
         """ Exception to be thrown if CRC Check failed
         Attributes:
@@ -95,4 +107,4 @@ class CRCCheckFailedException(ModbusException):
             message -- explanation of the error
         """
         self.expression = expression
-        self.message = message 
+        self.message = message

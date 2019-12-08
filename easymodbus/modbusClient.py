@@ -53,7 +53,7 @@ class ModbusClient(object):
         """
         Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
         """
-        if (self.__ser is not None):
+        if self.__ser is not None:
             serial = importlib.import_module("serial")
             if self.__stopbits == 0:
                 self.__ser.stopbits = serial.STOPBITS_ONE
@@ -72,7 +72,7 @@ class ModbusClient(object):
                                        parity=self.__ser.parity, stopbits=self.__ser.stopbits, xonxoff=0, rtscts=0)
             self.__ser.writeTimeout = self.__timeout
         # print (self.ser)
-        if (self.__tcpClientSocket is not None):
+        if self.__tcpClientSocket is not None:
             self.__tcpClientSocket.settimeout(5)
             self.__tcpClientSocket.connect((self.__ipAddress, self.__port))
 
@@ -84,11 +84,11 @@ class ModbusClient(object):
         self.__stoplistening = False
         self.__receivedata = bytearray()
         try:
-            while (not self.__stoplistening):
-                if (len(self.__receivedata) == 0):
+            while not self.__stoplistening:
+                if len(self.__receivedata) == 0:
                     self.__receivedata = bytearray()
                     self.__timeout = 500
-                    if (self.__tcpClientSocket is not None):
+                    if self.__tcpClientSocket is not None:
                         self.__receivedata = self.__tcpClientSocket.recv(256)
         except socket.timeout:
             self.__receivedata = None
@@ -97,9 +97,9 @@ class ModbusClient(object):
         """
         Closes Serial port, or TCP-Socket connection
         """
-        if (self.__ser is not None):
+        if self.__ser is not None:
             self.__ser.close()
-        if (self.__tcpClientSocket is not None):
+        if self.__tcpClientSocket is not None:
             self.__stoplistening = True
             self.__tcpClientSocket.shutdown(socket.SHUT_RDWR)
             self.__tcpClientSocket.close()
@@ -113,7 +113,7 @@ class ModbusClient(object):
         returns: Boolean Array [0..quantity-1] which contains the discrete Inputs
         """
         self.__transactionIdentifier += 1
-        if (self.__ser is not None):
+        if self.__ser is not None:
             if self.__ser.closed:
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         if (starting_address > 65535) | (quantity > 2000):
