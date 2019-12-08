@@ -997,3 +997,15 @@ def convert_registers_to_float(registers):
     b [3] = (registers[1] & 0xff00)>>8
     returnValue = struct.unpack('<f', b)            #little Endian
     return returnValue
+
+
+if __name__ == "__main__":
+    modbus_client = ModbusClient("192.168.178.33", 502)
+    modbus_client.connect()
+    counter = 0
+    while (1):
+        counter = counter + 1
+        modbus_client.unitidentifier = 200
+        modbus_client.write_single_register(1,counter)
+        print (modbus_client.read_holdingregisters(1,1))
+    modbus_client.close()

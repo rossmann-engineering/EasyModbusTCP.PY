@@ -2,8 +2,8 @@
 README.txt
 setup.cfg
 setup.py
-easymodbus\__init__.py
-easymodbus\easyModbusGUI.py
-easymodbus\modbusClient.py
-easymodbus\modbusException.py
-easymodbus\run.py
+easymodbus/__init__.py
+easymodbus/easyModbusGUI.py
+easymodbus/modbusClient.py
+easymodbus/modbusException.py
+easymodbus/run.py
