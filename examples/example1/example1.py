@@ -26,13 +26,13 @@ Input Registers: 0...1021 mapped to IW0 to IW1022
 import easymodbus.modbusClient
 modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.110', 502)    #Create Modbus-TCP class (Server IP-Address and Port)
 modbus_client.connect()                                                         #Connect to the Modbus-TCP Server
-modbus_client.write_single_register(0,140)                                      #We write "140" to the first Holding Register
-modbus_client.write_single_register(1,385)                                      #We write "385" to the second Holding Register
-register_values = modbus_client.read_holdingregisters(0,2)                      #We Read 2 Holding Registers from the Server
+modbus_client.write_single_register(0, 140)                                     #We write "140" to the first Holding Register
+modbus_client.write_single_register(1, 385)                                     #We write "385" to the second Holding Register
+register_values = modbus_client.read_holdingregisters(0, 2)                     #We Read 2 Holding Registers from the Server
 print("Value of Register #1:" + str(register_values[0]))                        #Should be 140
 print("Value of Register #2:" + str(register_values[1]))                        #Should be 385
-modbus_client.write_single_coil(0,True)                                         #We write the First Digital Output to "True"
-print("Current State of DI0: " + str(modbus_client.read_discreteinputs(0,1)[0]))#We Read the Current state of the First Digital Input
+modbus_client.write_single_coil(0, True)                                        #We write the First Digital Output to "True"
+print("Current State of DI0: " + str(modbus_client.read_discreteinputs(0, 1)[0]))#We Read the Current state of the First Digital Input
 modbus_client.close()                                                           #close socket
 
 
