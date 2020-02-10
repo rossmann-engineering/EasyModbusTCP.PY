@@ -31,7 +31,7 @@ modbus_client.write_single_register(1,385)                  #We write "385" to t
 register_values = modbus_client.read_holdingregisters(0,2)  #We Read 2 Holding Registers from the Server
 print ("Value of Register #1:" + str(register_values[0]))    #Should be 140
 print ("Value of Register #2:" + str(register_values[1]))    #Should be 385
-                  #We write the First Digital Output to "True"
+modbus_client.write_single_coil(0,True)                 #We write the First Digital Output to "True"
 print ("Current State of DI0: " + str(modbus_client.read_discreteinputs(0,1)[0]))   #We Read the Current state of the First Digital Input
 
 modbus_client.close()
