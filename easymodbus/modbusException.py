@@ -17,6 +17,18 @@ class ModbusException(Exception):
         """
         self.message = message
 
+class TimeoutError(ModbusException):
+    '''
+    classdocs
+    '''
+
+    def __init__(self, message):
+        """ Exception to be thrown if read times out
+        Attributes:
+            message -- explanation of the error
+        """
+        self.message = message
+
 
 class SerialPortNotOpenedException(ModbusException):
     '''
