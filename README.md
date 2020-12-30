@@ -50,8 +50,9 @@ modbus_client.close()
 ```
 
 
-####See the following codesamples in the "examples" folder:
+###See the following codesamples in the "examples" folder:
 
-Example 1.1: Data exchange to a Siemens S7 PLC - Simple Example which Read and Writes some Values to the PLC and Print it at the console
+Example 1.1: Data exchange to a Siemens S7 PLC - Simple Example which Read and Writes some Values to the PLC and Print it at the console.  
+This Folder contails a python example code (example1.py) and a Siemens TIA-Portal Project 
 
 Visit www.EayModbusTCP.net for more informations and Codesamples
