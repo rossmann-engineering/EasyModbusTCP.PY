@@ -14,7 +14,7 @@ with open(path.join(this_directory, 'README.txt')) as f:
 setup(
     name='EasyModbus',
     packages = ['easymodbus'],
-    version      = '1.2.7',
+    version      = '1.3.0',
     license      = 'MIT',
     author       = 'Stefan Rossmann',
     author_email = 'info@rossmann-engineering.de',
