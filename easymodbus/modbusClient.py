@@ -10,6 +10,7 @@ import struct
 import threading
 import logging
 from logging.handlers import RotatingFileHandler
+import math
 
 class ModbusClient(object):
     """
@@ -751,11 +752,12 @@ class ModbusClient(object):
             if self.__ser.closed:
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         function_code = 15
-        length = 6
+        if len(values)%8 == 0:
+            length = 7 + math.floor(len(values) / 8)
+        else:
+            length = 7 + math.floor(len(values)/8) + 1
         transaction_identifier_lsb = self.__transactionIdentifier & 0xFF
         transaction_identifier_msb = ((self.__transactionIdentifier & 0xFF00) >> 8)
-        length_lsb = length & 0xFF
-        length_msb = (length & 0xFF00) >> 8
         starting_address_lsb = starting_address & 0xFF
         starting_address_msb = (starting_address & 0xFF00) >> 8
         quantityLSB = len(values) & 0xFF
@@ -820,8 +822,8 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00
             protocolIdentifierMSB = 0x00
-            length_lsb = 0x06
-            length_msb = 0x00
+            length_lsb = length & 0xFF
+            length_msb = (length & 0xFF00) >> 8
             data = bytearray(
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
@@ -867,11 +869,9 @@ class ModbusClient(object):
             if self.__ser.closed:
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         function_code = 16
-        length = 6
         transaction_identifier_lsb = self.__transactionIdentifier & 0xFF
         transaction_identifier_msb = ((self.__transactionIdentifier & 0xFF00) >> 8)
-        length_lsb = length & 0xFF
-        length_msb = (length & 0xFF00) >> 8
+        length = len(values) * 2 + 7
         starting_address_lsb = starting_address & 0xFF
         starting_address_msb = (starting_address & 0xFF00) >> 8
         quantityLSB = len(values) & 0xFF
@@ -924,8 +924,8 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00
             protocolIdentifierMSB = 0x00
-            length_lsb = 0x06
-            length_msb = 0x00
+            length_lsb = length & 0xFF
+            length_msb = (length & 0xFF00) >> 8
             data = bytearray(
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
@@ -1178,7 +1178,7 @@ def convert_registers_to_float(registers):
 
 
 if __name__ == "__main__":
-    modbus_client = ModbusClient("COM4")
+    modbus_client = ModbusClient("10.45.0.130", 502)
     modbus_client.debug = True
     modbus_client.logging_level = logging.DEBUG
     modbus_client.connect()
@@ -1186,6 +1186,7 @@ if __name__ == "__main__":
     while (1):
         counter = counter + 1
         modbus_client.unitidentifier = 200
-        modbus_client.write_single_register(1, counter)
-        print(modbus_client.read_discreteinputs(1, 1))
+        registers = [1,2,3,4,5,6,7,8,9]
+        modbus_client.write_multiple_registers(1, registers)
+        #print(modbus_client.read_discreteinputs(1, 1))
     modbus_client.close()
