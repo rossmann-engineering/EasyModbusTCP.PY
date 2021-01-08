@@ -9,6 +9,7 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
    3.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)  
 4. [Library Documentation](#documentation)  
    4.1 [Methods](#methods)  
+   4.2 [Properties](#properties)  
    4.2 [Helper functions](#functions)  
 
 <div id="installation"/>
@@ -152,6 +153,75 @@ value: List of Boolean values to write
 Write multiple Holding Registers to Server device (Function code 16)  
 starting_address: First Holding Register to write  
 value: List of int values to write
+
+<div id="properties"/>
+
+#### Properties
+
+**port**
+
+Datatype: int  
+Port were the Modbus-TCP Server is reachable (Standard is 502)
+
+**ipaddress**
+
+Datatype: str  
+IP-Address of the Server to be connected
+
+**unitidentifier**
+
+Datatype: int  
+Unit identifier in case of serial connection (Default = 1)
+
+**baudrate**
+
+Datatype: int  
+Baudrate for serial connection (Default = 9600)
+
+**parity**
+
+Datatype: int  
+Parity in case of serial connection 
+The Helper class "Parity" can be used to define the parity  
+For example: modbus_client.parity = easymodbus.modbusClient.Parity.odd  
+Possible values are:
+even = 0  
+odd = 1  
+none = 2  
+
+**stopbits**
+
+Datatype: int  
+Stopbits in case of serial connection 
+The Helper class "Stopbits" can be used to define the number of stopbits  
+For example: modbus_client.stopbits = easymodbus.modbusClient.Stopbits.one  
+Possible values are:
+one = 0  
+two = 1  
+onePointFive = 2  
+
+**timeout**
+
+Datatype: int  
+Max. time before an Exception is thrown. 
+
+**is_connected**
+
+Datatype: bool  
+Returns true if a connection has been established (only read)
+
+**debug**
+
+Datatype: bool  
+Enables/disables debug mode - In debug mode Request and Response and depending in the logging level the RAW-Data are displayed at the console output and stored in a logfile "logdata.txt"  
+Disabled at default
+
+**logging_level**
+ 
+Sets or gets the logging level. Default value is logging.INFO. In this Request and Response including arguments are logged (if debug is enabled)  
+if the level is set to logging.DEBUG also the RAW data transmitted and received are logged for debugging purposes.  
+The are logged at the console output and stored in logfile.txt 
+
 
 <div id="functions"/>
 
