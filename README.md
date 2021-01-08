@@ -16,7 +16,7 @@ pyserial (only for Modbus RTU)
 ### Table of Contents
 1. [Supported Function codes](#functioncodes)
 2. [Examples](#examples)  
-   2.1. [Example 1 (Read two Holding Registres from Modbus-TCP Server)](#example1)
+   2.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)
 3. [Library Documentation](#documentation)  
    3.1 [Methods](#methods) 
 
