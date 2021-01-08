@@ -96,3 +96,55 @@ Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
 **def close(self)**
 
 Closes Serial port, or TCP-Socket connection
+
+**def read_discreteinputs(self, starting_address, quantity)**
+
+Read Discrete Inputs from Server device (Function code 2)  
+starting_address: First discrete input to read  
+quantity: Number of discrete Inputs to read  
+returns: List of bool values [0..quantity-1] which contains the discrete Inputs  
+
+**def read_coils(self, starting_address, quantity)**
+
+Read Coils from Server device (Function code 1)  
+starting_address: First coil to read  
+quantity: Number of coils to read  
+returns: List of bool values [0..quantity-1] which contains the coils  
+
+**def read_holdingregisters(self, starting_address, quantity)**
+
+Read Holding Registers from Server device (Function code 3)  
+starting_address: First Holding Register to read  
+quantity: Number of Holding Registers to read  
+returns: List of int values [0..quantity-1] which contains the registers 
+
+**def read_inputregisters(self, starting_address, quantity)**
+
+Read Input Registers from Server device (Function code 4)  
+starting_address: First Input Register to read  
+quantity: Number of Input Registers to read  
+returns: List of int values [0..quantity-1] which contains the registers 
+
+**def write_single_coil(self, starting_address, value)**
+
+Write single Coil to Server device (Function code 5)  
+starting_address: Coil to write  
+value: Boolean value to write
+
+**def write_single_register(self, starting_address, value)**
+
+Write single Holding Register to Server device (Function code 6)  
+starting_address: Holding Register to write  
+value: int value to write
+
+**def write_multiple_coils(self, starting_address, values)**
+
+Write multiple Coils to Server device (Function code 15)  
+starting_address: First coil to write  
+value: List of Boolean values to write
+
+**def write_multiple_registers(self, starting_address, values)**
+
+Write multiple Holding Registers to Server device (Function code 16)  
+starting_address: First Holding Register to write  
+value: List of int values to write
