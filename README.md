@@ -9,7 +9,7 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
    3.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)
 4. [Library Documentation](#documentation)
    4.1 [Methods](#methods)
-   4.2 [Helper functions](#functions)
+   4.2 [Helper functions](#functions)  
 
 <div id="installation"/>
 
