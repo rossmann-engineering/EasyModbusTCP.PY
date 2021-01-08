@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
+from setuptools import setup
 
-#To upload to pypi: call setup.py with the parameters sdist upload
-#Copy .pypirc into home directory (Benutzer/srossmann....)
+#1: setup.py sdist
+#2: twine upload dist/* --repository-url https://upload.pypi.org/legacy/
 
 # read the contents of your README file
 from os import path
