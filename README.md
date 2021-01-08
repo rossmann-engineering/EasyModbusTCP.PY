@@ -1,6 +1,17 @@
 ## EasyModbusTCP - THE standard library for Modbus RTU and Modbus TCP
 
-Visit www.EayModbusTCP.net for more informations and Codesamples
+Visit www.EasyModbusTCP.net for more informations and Codesamples
+
+### Table of Contents
+1. [Installation](#installation)
+2. [Supported Function codes](#functioncodes)
+3. [Examples](#examples)
+   3.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)
+4. [Library Documentation](#documentation)
+   4.1 [Methods](#methods)
+   4.2 [Helper functions](#functions)
+
+<div id="installation"/>
 
 ### Installation:
 
@@ -12,13 +23,6 @@ Python 2.7
 Python 3.6
 
 pyserial (only for Modbus RTU)
-
-### Table of Contents
-1. [Supported Function codes](#functioncodes)
-2. [Examples](#examples)  
-   2.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)
-3. [Library Documentation](#documentation)  
-   3.1 [Methods](#methods) 
 
 
 <div id="functioncodes"/>
@@ -148,3 +152,31 @@ value: List of Boolean values to write
 Write multiple Holding Registers to Server device (Function code 16)  
 starting_address: First Holding Register to write  
 value: List of int values to write
+
+<div id="functions"/>
+
+#### Helper functions
+
+**def convert_double_to_two_registers(doubleValue)**
+
+Convert 32 Bit Value to two 16 Bit Value to send as Modbus Registers
+doubleValue: Value to be converted
+return: 16 Bit Register values int[]
+
+**def convert_float_to_two_registers(floatValue)**
+
+Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers
+floatValue: Value to be converted
+return: 16 Bit Register values int[]
+
+**def convert_registers_to_double(registers)**
+
+Convert two 16 Bit Registers to 32 Bit long value - Used to receive 32 Bit values from Modbus (Modbus Registers are 16 Bit long)
+registers: 16 Bit Registers
+return: 32 bit value
+
+**def convert_registers_to_float(registers)**
+
+Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
+registers: 16 Bit Registers
+return: 32 bit value real
