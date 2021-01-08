@@ -1,5 +1,7 @@
 ## EasyModbusTCP - THE standard library for Modbus RTU and Modbus TCP
 
+Visit www.EayModbusTCP.net for more informations and Codesamples
+
 ### Installation:
 
 pip install EasyModbus
@@ -11,7 +13,17 @@ Python 3.6
 
 pyserial (only for Modbus RTU)
 
-### Supported Function codes
+### Table of Contents
+1. [Supported Function codes](#functioncodes)
+2. [Examples](#examples)  
+   2.1. [Example 1 (Read two Holding Registres from Modbus-TCP Server)](#example1)
+3. [Library Documentation](#documentation)  
+   3.1 [Methods](#methods) 
+
+
+<div id="functioncodes"/>
+
+### Supported Function codes 
 
 - Read Coils (FC1)
 - Read Discrete Inputs (FC2)
@@ -22,13 +34,20 @@ pyserial (only for Modbus RTU)
 - Write Multiple Coils (FC15)
 - Write Multiple Registers (FC16)
 
-#### Get started - Example 1 (Read two Holding Registres from Modbus-TCP Server)
+<div id="examples"/>
+
+### Get started - Examples
+
+All examples are available in the folder "examples" in the Git-Repository
+
+<div id="example1"/>
+
+#### Example 1 (Read two Holding Registres from Modbus-TCP Server)
 First we create an instance of a Modbus-TCP class (Server IP-Address and Port)
 Then we Read 2 Holding Registers from the Server.  
 IMPORTANT: Usually there is a Register shift between the request and the server address range
 The Server address Range starts with address "1" but the Request that is sent starts with "0"
 In the example method call we read Register 1 and 2 (Because register "0" does not exist)
-Thats how it is specified, but unfortunatelly not always implemented as specified from some devices
 Please check the documentation of your device (or try it out)
 
 
@@ -49,10 +68,31 @@ print("Value of Register #2:" + str(register_values[1]))
 modbus_client.close()
 ```
 
+<div id="documentation"/>
 
-###See the following codesamples in the "examples" folder:
+### Library Documentation
 
-Example 1.1: Data exchange to a Siemens S7 PLC - Simple Example which Read and Writes some Values to the PLC and Print it at the console.  
-This Folder contails a python example code (example1.py) and a Siemens TIA-Portal Project 
+Class:  ModbusClient
 
-Visit www.EayModbusTCP.net for more informations and Codesamples
+<div id="methods"/>
+
+#### Methods
+
+**Constructor def \_\_init__(self, \*params)**
+
+<u>Constructor for Modbus RTU (serial line):</u>
+modbusClient = ModbusClient.ModbusClient(‘COM1’)
+First Parameter is the serial Port
+
+<u>Constructor for Modbus TCP:</u>
+modbusClient = ModbusClient.ModbusClient(‘127.0.0.1’, 502)
+First Parameter ist the IP-Address of the Server to connect to
+Second Parameter is the Port the Server listens to
+
+**def connect(self)**
+
+Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
+
+**def close(self)**
+
+Closes Serial port, or TCP-Socket connection
