@@ -6,7 +6,10 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
 1. [Installation](#installation). 
 2. [Supported Function codes](#functioncodes)  
 3. [Basic Usage](#basicusage)  
-   3.1. [Instatiation](#instatiation)  
+   3.1. [Instantiation](#instatiation)  
+   3.2. [Connect](#connect)  
+   3.3. [Close connection](#close)  
+   3.4. [Read values](#readvalues)  
 4. [Examples](#examples)  
    4.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)  
 5. [Library Documentation](#documentation)  
@@ -45,7 +48,7 @@ pyserial (only for Modbus RTU)
 
 ### 3. Basic usage
 
-<div id="instatiation"/>
+<div id="instantiation"/>
 
 #### 3.1 Instantiate ModbusClient class
 
@@ -63,6 +66,57 @@ Example for **Modbus TCP**
 ```python
 import easymodbus.modbusClient
 modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.52', 502)
+```
+
+<div id="connect"/>
+
+#### 3.2 Connect
+
+To connect to a Modbus-TCP Server or to a Modbus-RTU Slave simply use the "connect" Method.
+
+```python
+modbus_client.connect()
+```
+
+<div id="close"/>
+
+#### 3.3 Close connection
+
+To close the connection to a Modbus-TCP Server or to a Modbus-RTU Slave simply use the "close" Method.
+
+```python
+modbus_client.close()
+```
+
+<div id="readvalues"/>
+
+#### 3.4 Read Values
+
+The following functioncodes are used to read values from the remote device (Modbus-TCP Server or Modbus-RTU Client)
+
+- Read Coils (FC1) - Method "read_coils"
+- Read Discrete Inputs (FC2) - Method "read_discreteinputs"
+- Read Holding Registers (FC3) - Method "read_holdingregisters"
+- Read Input Registers (FC4) - Method "read_inputregisters"
+
+IMPORTANT: Usually there is a Register shift between the request and the server address range
+The Server address Range starts with address "1" but the Request that is sent starts with "0"
+In the example method call we read Register 1 and 2 (Because register "0" does not exist)
+Please check the documentation of your device (or try it out)
+
+```python
+import easymodbus.modbusClient
+
+#create an instance of a Modbus-TCP class (Server IP-Address and Port) and connect
+modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.110', 502)
+modbus_client.connect()
+
+#The first argument is the starting address, the second argument is the quantity.
+coils = modbus_client.read_coils(0, 2)	#Read coils 1 and 2 from server 
+discrete_inputs = modbus_client.read_discreteinputs(10, 10)	#Read discrete inputs 11 to 20 from server 
+input_registers = modbus_client.read_inputregisters(0, 10)	#Read input registers 1 to 10 from server 
+holding_registers = modbus_client.read_holdingregisters(0, 5)	#Read holding registers 1 to 5 from server 
+modbus_client.close()
 ```
 
 <div id="examples"/>
@@ -253,26 +307,30 @@ The are logged at the console output and stored in logfile.txt
 
 #### 5.3 Helper functions
 
-**def convert_double_to_two_registers(doubleValue)**
+**def convert_double_to_two_registers(doubleValue, register_order=RegisterOrder.lowHigh)**
 
 Convert 32 Bit Value to two 16 Bit Value to send as Modbus Registers  
 doubleValue: Value to be converted  
+register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 16 Bit Register values int[]  
 
-**def convert_float_to_two_registers(floatValue)**
+**def convert_float_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh)**
 
 Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers  
 floatValue: Value to be converted  
+register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 16 Bit Register values int[]  
 
-**def convert_registers_to_double(registers)**
+**def convert_registers_to_double(registers, register_order=RegisterOrder.lowHigh)**
 
 Convert two 16 Bit Registers to 32 Bit long value - Used to receive 32 Bit values from Modbus (Modbus Registers are 16 Bit long)  
 registers: 16 Bit Registers  
+register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 32 bit value  
 
-**def convert_registers_to_float(registers)**
+**def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh)**
 
 Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)  
 registers: 16 Bit Registers  
+register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 32 bit value real 
