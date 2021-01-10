@@ -51,6 +51,8 @@ class ModbusClient(object):
             self.__tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__ipAddress = params[0]
             self.__port = params[1]
+        else:
+            raise AttributeError ('Argument must be "str" for Modbus-RTU mode, or "str, int" for Modbus-TCP')
         logging.debug("Modbus client class initialized")
 
     def connect(self):

@@ -5,16 +5,18 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
 ### Table of Contents
 1. [Installation](#installation). 
 2. [Supported Function codes](#functioncodes)  
-3. [Examples](#examples)  
-   3.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)  
-4. [Library Documentation](#documentation)  
-   4.1 [Methods](#methods)  
-   4.2 [Properties](#properties)  
-   4.2 [Helper functions](#functions)  
+3. [Basic Usage](#basicusage)  
+   3.1. [Instatiation](#instatiation)  
+4. [Examples](#examples)  
+   4.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)  
+5. [Library Documentation](#documentation)  
+   5.1 [Methods](#methods)  
+   5.2 [Properties](#properties)  
+   5.2 [Helper functions](#functions)  
 
 <div id="installation"/>
 
-### Installation:
+### 1. Installation:
 
 pip install EasyModbus
 
@@ -28,7 +30,7 @@ pyserial (only for Modbus RTU)
 
 <div id="functioncodes"/>
 
-### Supported Function codes 
+### 2. Supported Function codes 
 
 - Read Coils (FC1)
 - Read Discrete Inputs (FC2)
@@ -39,15 +41,39 @@ pyserial (only for Modbus RTU)
 - Write Multiple Coils (FC15)
 - Write Multiple Registers (FC16)
 
+<div id="basicusage"/>
+
+### 3. Basic usage
+
+<div id="instatiation"/>
+
+#### 3.1 Instantiate ModbusClient class
+
+The arguments passed during the instantiation are important in order to differentiate between Modbus RTU (via the serial interface) and Modbus TCP (via Ethernet).  
+If an argument is passed during the instantiation, it is the serial interface that is used with Modbus RTU (e.g. 'COM1' or '/dev/ttyUSB0').
+Two arguments must be passed for Modbus TCP. This is the IP address and the port (usually 502)  
+
+Example for **Modbus RTU**  
+```python
+import easymodbus.modbusClient
+modbus_client = easymodbus.modbusClient.ModbusClient('/dev/ttyUSB0')
+```
+
+Example for **Modbus TCP**  
+```python
+import easymodbus.modbusClient
+modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.52', 502)
+```
+
 <div id="examples"/>
 
-### Get started - Examples
+### 4. Get started - Examples
 
 All examples are available in the folder "examples" in the Git-Repository
 
 <div id="example1"/>
 
-#### Example 1 (Read two Holding Registres from Modbus-TCP Server)
+#### 4.1 Example 1 (Read two Holding Registres from Modbus-TCP Server)
 First we create an instance of a Modbus-TCP class (Server IP-Address and Port)
 Then we Read 2 Holding Registers from the Server.  
 IMPORTANT: Usually there is a Register shift between the request and the server address range
@@ -75,13 +101,13 @@ modbus_client.close()
 
 <div id="documentation"/>
 
-### Library Documentation
+### 5. Library Documentation
 
 Class:  ModbusClient
 
 <div id="methods"/>
 
-#### Methods
+#### 5.1 Methods
 
 **Constructor def \_\_init__(self, \*params)**
 
@@ -156,7 +182,7 @@ value: List of int values to write
 
 <div id="properties"/>
 
-#### Properties
+#### 5.2 Properties
 
 **port**
 
@@ -225,7 +251,7 @@ The are logged at the console output and stored in logfile.txt
 
 <div id="functions"/>
 
-#### Helper functions
+#### 5.3 Helper functions
 
 **def convert_double_to_two_registers(doubleValue)**
 
