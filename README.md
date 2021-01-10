@@ -208,7 +208,7 @@ Baudrate for serial connection (Default = 9600)
 
 Datatype: int  
 Parity in case of serial connection 
-The Helper class "Parity" can be used to define the parity  
+The Helper class "Parity" can be used to define the parity (Default = Parity.even)  
 For example: modbus_client.parity = easymodbus.modbusClient.Parity.odd  
 Possible values are:
 even = 0  
@@ -218,7 +218,7 @@ none = 2
 **stopbits**
 
 Datatype: int  
-Stopbits in case of serial connection 
+Stopbits in case of serial connection (Default = Stopbits.one) 
 The Helper class "Stopbits" can be used to define the number of stopbits  
 For example: modbus_client.stopbits = easymodbus.modbusClient.Stopbits.one  
 Possible values are:
@@ -229,7 +229,7 @@ onePointFive = 2
 **timeout**
 
 Datatype: int  
-Max. time before an Exception is thrown. 
+Max. time before an Exception is thrown (Default = 5)  
 
 **is_connected**
 
