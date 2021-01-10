@@ -3,7 +3,7 @@
 Visit www.EasyModbusTCP.net for more informations and Codesamples
 
 ### Table of Contents
-1. [Installation](#installation). 
+1. [Installation](#installation)
 2. [Supported Function codes](#functioncodes)  
 3. [Basic Usage](#basicusage)  
    3.1. [Instantiation](#instatiation)  
@@ -15,7 +15,7 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
 5. [Library Documentation](#documentation)  
    5.1 [Methods](#methods)  
    5.2 [Properties](#properties)  
-   5.2 [Helper functions](#functions)  
+   5.3 [Helper functions](#functions)
 
 <div id="installation"/>
 
@@ -72,7 +72,7 @@ modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.52', 502)
 
 #### 3.2 Connect
 
-To connect to a Modbus-TCP Server or to a Modbus-RTU Slave simply use the "connect" Method.
+To connect to a Modbus-TCP Server or to a Modbus-RTU Slave simply use the "connect" Method. If Modbus-RTU is used, make sure to set the properties for serial connection (Baudrate, Parity, Stopbits), if they differ from the default values, **before** the "connect" Method is executed. 
 
 ```python
 modbus_client.connect()
