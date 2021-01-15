@@ -10,6 +10,7 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
    3.2. [Connect](#connect)  
    3.3. [Close connection](#close)  
    3.4. [Read values](#readvalues)  
+   3.5. [Write single values](#writesinglevalues)  
 4. [Examples](#examples)  
    4.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)  
 5. [Library Documentation](#documentation)  
@@ -116,6 +117,35 @@ coils = modbus_client.read_coils(0, 2)	#Read coils 1 and 2 from server
 discrete_inputs = modbus_client.read_discreteinputs(10, 10)	#Read discrete inputs 11 to 20 from server 
 input_registers = modbus_client.read_inputregisters(0, 10)	#Read input registers 1 to 10 from server 
 holding_registers = modbus_client.read_holdingregisters(0, 5)	#Read holding registers 1 to 5 from server 
+modbus_client.close()
+```
+
+<div id="writesinglevalues"/>
+
+#### 3.5 Write single Values
+
+The following functioncodes are used to write single values (Holding Registers or Coils) from the remote device (Modbus-TCP Server or Modbus-RTU Client)
+
+- Write Single Coil (FC5) - Method "write_single_coil"
+- Write Single Register (FC6) - Method "write_single_register"
+
+IMPORTANT: Usually there is a Register shift between the request and the server address range
+The Server address Range starts with address "1" but the Request that is sent starts with "0"
+In the example method call we write to Register 1 (Because register "0" does not exist)
+Please check the documentation of your device (or try it out)
+
+```python
+import easymodbus.modbusClient
+
+#create an instance of a Modbus-TCP class (Server IP-Address and Port) and connect
+modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.110', 502)
+modbus_client.connect()
+
+holding_register_value = 115
+coil_value = True
+#The first argument is the address, the second argument is the value.
+modbus_client.write_single_register(0, holding_register_value)	#Write value "115" to Holding Register 1 
+modbus_client.write_single_coil(10, coil_value)	#Set Coil 11 to True
 modbus_client.close()
 ```
 
