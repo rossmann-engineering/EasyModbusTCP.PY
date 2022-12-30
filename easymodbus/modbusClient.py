@@ -427,8 +427,14 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+
+            
+            if len(data) < bytes_to_read:
+                raise Exceptions.TimeoutError('Read timeout Exception')
+
             logging.debug("---------Receive: {0}"
                           .format(str(data.hex(' '))))
+
             if (data[1 + 6] == 0x83) & (data[2 + 6] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1 + 6] == 0x83) & (data[2 + 6] == 0x02):
