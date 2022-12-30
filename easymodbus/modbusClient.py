@@ -8,7 +8,9 @@ import easymodbus.modbusException as Exceptions
 import socket
 import struct
 import threading
-
+import logging
+from logging.handlers import RotatingFileHandler
+import math
 
 class ModbusClient(object):
     """
@@ -33,6 +35,7 @@ class ModbusClient(object):
         self.__ser = None
         self.__tcpClientSocket = None
         self.__connected = False
+        self.__logging_level = logging.INFO
         # Constructor for RTU
         if len(params) == 1 & isinstance(params[0], str):
             serial = importlib.import_module("serial")
@@ -48,6 +51,9 @@ class ModbusClient(object):
             self.__tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__ipAddress = params[0]
             self.__port = params[1]
+        else:
+            raise AttributeError ('Argument must be "str" for Modbus-RTU mode, or "str, int" for Modbus-TCP')
+        logging.debug("Modbus client class initialized")
 
     def connect(self):
         """
@@ -71,6 +77,11 @@ class ModbusClient(object):
             self.__ser = serial.Serial(self.serialPort, self.__baudrate, timeout=self.__timeout,
                                        parity=self.__ser.parity, stopbits=self.__ser.stopbits, xonxoff=0, rtscts=0)
             self.__ser.writeTimeout = self.__timeout
+
+            logging.info(
+                "Modbus client connected to serial network, Port: {0}, Baudrate: {1}, Parity: {2}, Stopbits: {3}"
+                .format(str(self.serialPort), str(self.__baudrate), str(self.__parity), str(self.__stopbits)))
+
         # print (self.ser)
         if self.__tcpClientSocket is not None:
             self.__tcpClientSocket.settimeout(5)
@@ -79,6 +90,9 @@ class ModbusClient(object):
             self.__connected = True
             self.__thread = threading.Thread(target=self.__listen, args=())
             self.__thread.start()
+            logging.info(
+                "Modbus client connected to TCP network, IP Address: {0}, Port: {1}"
+                .format(str(self.__ipAddress), str(self.__port)))
 
     def __listen(self):
         self.__stoplistening = False
@@ -104,6 +118,7 @@ class ModbusClient(object):
             self.__tcpClientSocket.shutdown(socket.SHUT_RDWR)
             self.__tcpClientSocket.close()
         self.__connected = False
+        logging.info("Modbus client connection closed")
 
     def read_discreteinputs(self, starting_address, quantity):
         """
@@ -112,6 +127,8 @@ class ModbusClient(object):
         quantity: Numer of discrete Inputs to be read
         returns: Boolean Array [0..quantity-1] which contains the discrete Inputs
         """
+        logging.info("Request to read discrete inputs (FC02), starting address: {0}, quantity: {1}"
+                     .format(str(starting_address), str(quantity)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
@@ -137,6 +154,8 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data[6] = crcLSB
             data[7] = crcMSB
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             if quantity % 8 != 0:
                 bytes_to_read = 6 + int(quantity / 8)
@@ -145,6 +164,8 @@ class ModbusClient(object):
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if (data[1] == 0x82) & (data[2] == 0x01):
@@ -164,6 +185,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append(bool((data[int(i / 8) + 3] >> int(i % 8)) & 0x1))
+            logging.info("Response to read discrete inputs (FC02), values: {0}"
+                         .format(str(myList)))
             return myList
         else:
             protocolIdentifierLSB = 0x00
@@ -174,6 +197,8 @@ class ModbusClient(object):
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
                  starting_address_lsb, quantity_msb, quantity_lsb])
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             self.__receivedata = bytearray()
             if quantity % 8 != 0:
@@ -187,6 +212,8 @@ class ModbusClient(object):
                 raise Exception('Read Timeout')
 
             data = bytearray(self.__receivedata)
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
 
             if (data[1 + 6] == 0x82) & (data[2 + 6] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
@@ -200,6 +227,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append(bool((data[int(i / 8) + 3 + 6] >> int(i % 8)) & 0x1))
+            logging.info("Response to read discrete inputs (FC02), values: {0}"
+                         .format(str(myList)))
             return myList
 
     def read_coils(self, starting_address, quantity):
@@ -209,6 +238,8 @@ class ModbusClient(object):
         quantity: Numer of coils to be read
         returns:  Boolean Array [0..quantity-1] which contains the coils
         """
+        logging.info("Request to read coils (FC01), starting address: {0}, quantity: {1}"
+                     .format(str(starting_address), str(quantity)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
@@ -234,6 +265,8 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data[6] = crcLSB
             data[7] = crcMSB
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data).replace('\\x', ' ')))
             self.__ser.write(data)
             if quantity % 8 != 0:
                 bytes_to_read = 6 + int(quantity / 8)
@@ -242,6 +275,8 @@ class ModbusClient(object):
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if (data[1] == 0x81) & (data[2] == 0x01):
@@ -261,6 +296,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append(bool((data[int(i / 8) + 3] >> int(i % 8)) & 0x1))
+            logging.info("Response to read coils (FC01), values: {0}"
+                         .format(str(myList)))
             return myList
         else:
             protocolIdentifierLSB = 0x00
@@ -271,6 +308,8 @@ class ModbusClient(object):
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
                  starting_address_lsb, quantity_msb, quantity_lsb])
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             self.__receivedata = bytearray()
             if (quantity % 8 != 0):
@@ -283,6 +322,8 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if (data[1 + 6] == 0x82) & (data[2 + 6] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1 + 6] == 0x82) & (data[2 + 6] == 0x02):
@@ -295,6 +336,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append(bool((data[int(i / 8) + 3 + 6] >> int(i % 8)) & 0x1))
+            logging.info("Response to read coils (FC01), values: {0}"
+                         .format(str(myList)))
             return myList
 
     def read_holdingregisters(self, starting_address, quantity):
@@ -304,6 +347,8 @@ class ModbusClient(object):
         quantity:  Number of holding registers to be read
         returns:  Int Array [0..quantity-1] which contains the holding registers
         """
+        logging.info("Request to read holding registers (FC03), starting address: {0}, quantity: {1}"
+                     .format(str(starting_address), str(quantity)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
@@ -330,13 +375,15 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data[6] = crcLSB
             data[7] = crcMSB
-
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             bytes_to_read = 5 + int(quantity * 2)
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
-
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if (data[1] == 0x83) & (data[2] == 0x01):
@@ -357,6 +404,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append((data[i * 2 + 3] << 8) + data[i * 2 + 4])
+            logging.info("Response to read holding registers (FC03), values: {0}"
+                         .format(str(myList)))
             return myList
         else:
             protocolIdentifierLSB = 0x00
@@ -367,6 +416,8 @@ class ModbusClient(object):
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
                  starting_address_lsb, quantity_msb, quantity_lsb])
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             bytes_to_read = 9 + int(quantity * 2)
             self.__receivedata = bytearray()
@@ -376,9 +427,14 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+
             
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
+
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
+
             if (data[1 + 6] == 0x83) & (data[2 + 6] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1 + 6] == 0x83) & (data[2 + 6] == 0x02):
@@ -391,6 +447,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append((data[i * 2 + 3 + 6] << 8) + data[i * 2 + 4 + 6])
+            logging.info("Response to read holding registers (FC03), values: {0}"
+                         .format(str(myList)))
             return myList
 
     def read_inputregisters(self, starting_address, quantity):
@@ -400,6 +458,8 @@ class ModbusClient(object):
         quantity:  Number of input registers to be read
         returns:  Int Array [0..quantity-1] which contains the input registers
         """
+        logging.info("Request to read input registers (FC04), starting address: {0}, quantity: {1}"
+                     .format(str(starting_address), str(quantity)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
@@ -425,7 +485,8 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data[6] = crcLSB
             data[7] = crcMSB
-
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             bytes_to_read = 5 + int(quantity * 2)
 
@@ -433,7 +494,8 @@ class ModbusClient(object):
 
             b = bytearray(data)
             data = b
-
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError("Read timeout Exception")
             if (data[1] == 0x84) & (data[2] == 0x01):
@@ -453,6 +515,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append((data[i * 2 + 3] << 8) + data[i * 2 + 4])
+            logging.info("Response to read input registers (FC04), values: {0}"
+                         .format(str(myList)))
             return myList
         else:
             protocolIdentifierLSB = 0x00
@@ -463,6 +527,8 @@ class ModbusClient(object):
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
                  starting_address_lsb, quantity_msb, quantity_lsb])
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             bytes_to_read = 9 + int(quantity * 2)
             self.__receivedata = bytearray()
@@ -472,6 +538,8 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if (data[1 + 6] == 0x84) & (data[2 + 6] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1 + 6] == 0x84) & (data[2 + 6] == 0x02):
@@ -484,6 +552,8 @@ class ModbusClient(object):
             myList = list()
             for i in range(0, quantity):
                 myList.append((data[i * 2 + 3 + 6] << 8) + data[i * 2 + 4 + 6])
+            logging.info("Response to read input registers (FC04), values: {0}"
+                         .format(str(myList)))
             return myList
 
     def write_single_coil(self, starting_address, value):
@@ -492,6 +562,8 @@ class ModbusClient(object):
         starting_address: Coil to be written
         value:  Coil Value to be written
         """
+        logging.info("Request to write single coil (FC05), starting address: {0}, value: {1}"
+                     .format(str(starting_address), str(value)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
@@ -519,11 +591,15 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data[6] = crcLSB
             data[7] = crcMSB
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             bytes_to_read = 8
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if (data[1] == 0x85) & (data[2] == 0x01):
@@ -552,9 +628,13 @@ class ModbusClient(object):
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
                  starting_address_lsb, valueMSB, valueLSB])
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             bytes_to_read = 12
             self.__receivedata = bytearray()
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             try:
                 while len(self.__receivedata) == 0:
                     pass
@@ -578,6 +658,8 @@ class ModbusClient(object):
         starting_address:  Register to be written
         value: Register Value to be written
         """
+        logging.info("Request to write single register (FC06), starting address: {0}, value: {1}"
+                     .format(str(starting_address), str(value)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
@@ -601,11 +683,16 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data[6] = crcLSB
             data[7] = crcMSB
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             bytes_to_read = 8
+            data = None
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             # Check for Exception
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
@@ -636,6 +723,8 @@ class ModbusClient(object):
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
                  starting_address_lsb, valueMSB, valueLSB])
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             bytes_to_read = 12
             self.__receivedata = bytearray()
@@ -645,6 +734,8 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if (data[1 + 6] == 0x86) & (data[2 + 6] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1 + 6] == 0x86) & (data[2 + 6] == 0x02):
@@ -662,16 +753,19 @@ class ModbusClient(object):
         starting_address :  First coil to be written
         values:  Coil Values [0..quantity-1] to be written
         """
+        logging.info("Request to write multiple coil (FC15), starting address: {0}, values: {1}"
+                     .format(str(starting_address), str(values)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         function_code = 15
-        length = 6
+        if len(values)%8 == 0:
+            length = 7 + math.floor(len(values) / 8)
+        else:
+            length = 7 + math.floor(len(values)/8) + 1
         transaction_identifier_lsb = self.__transactionIdentifier & 0xFF
         transaction_identifier_msb = ((self.__transactionIdentifier & 0xFF00) >> 8)
-        length_lsb = length & 0xFF
-        length_msb = (length & 0xFF00) >> 8
         starting_address_lsb = starting_address & 0xFF
         starting_address_msb = (starting_address & 0xFF00) >> 8
         quantityLSB = len(values) & 0xFF
@@ -704,11 +798,15 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data.append(crcLSB)
             data.append(crcMSB)
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             bytes_to_read = 8
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if (data[1] == 0x8F) & (data[2] == 0x01):
@@ -732,8 +830,8 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00
             protocolIdentifierMSB = 0x00
-            length_lsb = 0x06
-            length_msb = 0x00
+            length_lsb = length & 0xFF
+            length_msb = (length & 0xFF00) >> 8
             data = bytearray(
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
@@ -741,6 +839,8 @@ class ModbusClient(object):
             data.append(len(valueToWrite))  # Bytecount
             for i in range(0, len(valueToWrite)):
                 data.append(valueToWrite[i] & 0xFF)
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             bytes_to_read = 12
             self.__receivedata = bytearray()
@@ -750,6 +850,8 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if (data[1] == 0x8F) & (data[2] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1] == 0x8F) & (data[2] == 0x02):
@@ -768,16 +870,16 @@ class ModbusClient(object):
         starting_address: First register to be written
         values:  Register Values [0..quantity-1] to be written
         """
+        logging.info("Request to write multiple registers (FC16), starting address: {0}, values: {1}"
+                     .format(str(starting_address), str(values)))
         self.__transactionIdentifier += 1
         if self.__ser is not None:
             if self.__ser.closed:
                 raise Exception.SerialPortNotOpenedException("serial port not opened")
         function_code = 16
-        length = 6
         transaction_identifier_lsb = self.__transactionIdentifier & 0xFF
         transaction_identifier_msb = ((self.__transactionIdentifier & 0xFF00) >> 8)
-        length_lsb = length & 0xFF
-        length_msb = (length & 0xFF00) >> 8
+        length = len(values) * 2 + 7
         starting_address_lsb = starting_address & 0xFF
         starting_address_msb = (starting_address & 0xFF00) >> 8
         quantityLSB = len(values) & 0xFF
@@ -798,11 +900,15 @@ class ModbusClient(object):
             crcMSB = (crc & 0xFF00) >> 8
             data.append(crcLSB)
             data.append(crcMSB)
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__ser.write(data)
             bytes_to_read = 8
             data = self.__ser.read(bytes_to_read)
             b = bytearray(data)
             data = b
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if len(data) < bytes_to_read:
                 raise Exceptions.TimeoutError('Read timeout Exception')
             if (data[1] == 0x90) & (data[2] == 0x01):
@@ -826,8 +932,8 @@ class ModbusClient(object):
         else:
             protocolIdentifierLSB = 0x00
             protocolIdentifierMSB = 0x00
-            length_lsb = 0x06
-            length_msb = 0x00
+            length_lsb = length & 0xFF
+            length_msb = (length & 0xFF00) >> 8
             data = bytearray(
                 [transaction_identifier_msb, transaction_identifier_lsb, protocolIdentifierMSB, protocolIdentifierLSB,
                  length_msb, length_lsb, self.__unitIdentifier, function_code, starting_address_msb,
@@ -836,7 +942,8 @@ class ModbusClient(object):
             for i in range(0, len(valueToWrite)):
                 data.append((valueToWrite[i] & 0xFF00) >> 8)
                 data.append(valueToWrite[i] & 0xFF)
-
+            logging.debug("---------Transmit: {0}"
+                          .format(str(data.hex(' '))))
             self.__tcpClientSocket.send(data)
             bytes_to_read = 12
             self.__receivedata = bytearray()
@@ -846,6 +953,8 @@ class ModbusClient(object):
             except Exception:
                 raise Exception('Read Timeout')
             data = bytearray(self.__receivedata)
+            logging.debug("---------Receive: {0}"
+                          .format(str(data.hex(' '))))
             if (data[1] == 0x90) & (data[2] == 0x01):
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             if (data[1] == 0x90) & (data[2] == 0x02):
@@ -975,6 +1084,43 @@ class ModbusClient(object):
         """
         return self.__connected
 
+    @property
+    def debug(self):
+        """
+        Enables/disables debug mode
+        """
+        return self.__debug
+
+    @debug.setter
+    def debug(self, debug):
+        """
+        Enables/disables debug mode
+        """
+        self.__debug = debug
+        if self.__debug:
+            logging.getLogger().setLevel(self.__logging_level)
+            # Add the log message handler to the logger
+            handler1 = logging.handlers.RotatingFileHandler(
+                'logdata.txt', maxBytes=2000000, backupCount=5)
+            logging.getLogger().addHandler(handler1)
+            formatter1 = logging.Formatter("%(asctime)s;%(message)s",
+                                           "%Y-%m-%d %H:%M:%S")
+            handler1.setFormatter(formatter1)
+
+    @property
+    def logging_level(self):
+        """
+        Sets the logging level - Default is logging.INFO
+        """
+        return self.__logging_level
+
+    @logging_level.setter
+    def logging_level(self, logging_level):
+        """
+        Sets the logging level - Default is logging.INFO
+        """
+        self.__logging_level = logging_level
+        logging.getLogger().setLevel(self.__logging_level)
 
 class Parity():
     even = 0
@@ -987,20 +1133,29 @@ class Stopbits():
     two = 1
     onePointFive = 2
 
+class RegisterOrder():
+    lowHigh = 0
+    highLow = 1
 
-def convert_double_to_two_registers(doubleValue):
+
+def convert_double_to_two_registers(doubleValue, register_order=RegisterOrder.lowHigh):
     """
     Convert 32 Bit Value to two 16 Bit Value to send as Modbus Registers
     doubleValue: Value to be converted
+    register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh
     return: 16 Bit Register values int[]
     """
     myList = list()
+
     myList.append(int(doubleValue & 0x0000FFFF))  # Append Least Significant Word
     myList.append(int((doubleValue & 0xFFFF0000) >> 16))  # Append Most Significant Word
+    if register_order == RegisterOrder.highLow:
+        myList[0] = int((doubleValue & 0xFFFF0000) >> 16)
+        myList[1] = int(doubleValue & 0x0000FFFF)
     return myList
 
 
-def convert_float_to_two_registers(floatValue):
+def convert_float_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh):
     """
     Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers
     floatValue: Value to be converted
@@ -1010,21 +1165,25 @@ def convert_float_to_two_registers(floatValue):
     s = bytearray(struct.pack('<f', floatValue))  # little endian
     myList.append(s[0] | (s[1] << 8))  # Append Least Significant Word
     myList.append(s[2] | (s[3] << 8))  # Append Most Significant Word
-
+    if register_order == RegisterOrder.highLow:
+        myList[0] = s[2] | (s[3] << 8)
+        myList[1] = s[0] | (s[1] << 8)
     return myList
 
 
-def convert_registers_to_double(registers):
+def convert_registers_to_double(registers, register_order=RegisterOrder.lowHigh):
     """
     Convert two 16 Bit Registers to 32 Bit long value - Used to receive 32 Bit values from Modbus (Modbus Registers are 16 Bit long)
     registers: 16 Bit Registers
     return: 32 bit value
     """
     returnValue = (int(registers[0]) & 0x0000FFFF) | (int((registers[1]) << 16) & 0xFFFF0000)
+    if register_order == RegisterOrder.highLow:
+        returnValue = (int(registers[1]) & 0x0000FFFF) | (int((registers[0]) << 16) & 0xFFFF0000)
     return returnValue
 
 
-def convert_registers_to_float(registers):
+def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
     """
     Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
     registers: 16 Bit Registers
@@ -1035,17 +1194,25 @@ def convert_registers_to_float(registers):
     b[1] = (registers[0] & 0xff00) >> 8
     b[2] = (registers[1] & 0xff)
     b[3] = (registers[1] & 0xff00) >> 8
+    if register_order == RegisterOrder.highLow:
+        b[2] = registers[0] & 0xff
+        b[3] = (registers[0] & 0xff00) >> 8
+        b[0] = (registers[1] & 0xff)
+        b[1] = (registers[1] & 0xff00) >> 8
     returnValue = struct.unpack('<f', b)  # little Endian
     return returnValue
 
 
 if __name__ == "__main__":
-    modbus_client = ModbusClient("192.168.178.33", 502)
+    modbus_client = ModbusClient("10.45.0.130", 502)
+    modbus_client.debug = True
+    modbus_client.logging_level = logging.DEBUG
     modbus_client.connect()
     counter = 0
     while (1):
         counter = counter + 1
         modbus_client.unitidentifier = 200
-        modbus_client.write_single_register(1, counter)
-        print(modbus_client.read_holdingregisters(1, 1))
+        registers = [1,2,3,4,5,6,7,8,9]
+        modbus_client.write_multiple_registers(1, registers)
+        #print(modbus_client.read_discreteinputs(1, 1))
     modbus_client.close()

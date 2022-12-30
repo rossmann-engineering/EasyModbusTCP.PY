@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
+from setuptools import setup
 
-#To upload to pypi: call setup.py with the parameters sdist upload
-#Copy .pypirc into home directory (Benutzer/srossmann....)
+#1: setup.py sdist
+#2: twine upload dist/* --repository-url https://upload.pypi.org/legacy/
 
 # read the contents of your README file
 from os import path
 this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.txt')) as f:
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='EasyModbus',
     packages = ['easymodbus'],
-    version      = '1.2.7',
+    version      = '1.4.0',
     license      = 'MIT',
     author       = 'Stefan Rossmann',
     author_email = 'info@rossmann-engineering.de',
