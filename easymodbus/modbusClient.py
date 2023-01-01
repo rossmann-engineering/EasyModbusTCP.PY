@@ -8,6 +8,7 @@ import socket
 import struct
 import threading
 import logging
+from datetime import time
 from logging.handlers import RotatingFileHandler
 import math
 from modbus_protocol import *
@@ -305,7 +306,7 @@ class ModbusClient(object):
             self.__receivedata = bytearray()
             try:
                 while len(self.__receivedata) == 0:
-                    pass
+                    time.sleep(0.001)
             except Exception:
                 raise Exception('Read Timeout')
             self.__adu.decode(ModbusType.TCP, bytearray(self.__receivedata))

@@ -26,7 +26,7 @@ pip install EasyModbus
 
 ### Requirements:
 
-Python 3.7
+>Python 3.8
 
 pyserial (only for Modbus RTU)
 
@@ -211,7 +211,7 @@ Connects to a Modbus-TCP Server or a Modbus-RTU Slave with the given Parameters
 
 Closes Serial port, or TCP-Socket connection
 
-**def read_discreteinputs(self, starting_address, quantity)**
+**def read_discrete_inputs(self, starting_address, quantity)**
 
 Read Discrete Inputs from Server device (Function code 2)  
 starting_address: First discrete input to read  
@@ -225,14 +225,14 @@ starting_address: First coil to read
 quantity: Number of coils to read  
 returns: List of bool values [0..quantity-1] which contains the coils  
 
-**def read_holdingregisters(self, starting_address, quantity)**
+**def read_holding_registers(self, starting_address, quantity)**
 
 Read Holding Registers from Server device (Function code 3)  
 starting_address: First Holding Register to read  
 quantity: Number of Holding Registers to read  
 returns: List of int values [0..quantity-1] which contains the registers 
 
-**def read_inputregisters(self, starting_address, quantity)**
+**def read_input_registers(self, starting_address, quantity)**
 
 Read Input Registers from Server device (Function code 4)  
 starting_address: First Input Register to read  
@@ -262,6 +262,18 @@ value: List of Boolean values to write
 Write multiple Holding Registers to Server device (Function code 16)  
 starting_address: First Holding Register to write  
 value: List of int values to write
+
+**def read_discreteinputs(self, starting_address, quantity)**
+
+deprecated - Use "read_discrete_inputs" instead
+
+**def read_holdingregisters(self, starting_address, quantity)**
+
+deprecated - Use "read_holding_registers" instead
+
+**def read_inputregisters(self, starting_address, quantity)**
+
+deprecated - Use "read_input_registers" instead
 
 <div id="properties"/>
 
