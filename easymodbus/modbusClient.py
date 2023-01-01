@@ -219,6 +219,14 @@ class ModbusClient(object):
             raise ValueError("Starting address must be 0 - 65535; quantity must be 0 - 125")
         self.__adu.pdu.function_code = function_code
         self.__adu.mbap_header.length = 6
+        if function_code == FunctionCode.WRITE_MULTIPLE_COILS:
+            if len(values) % 8 == 0:
+                self.__adu.mbap_header.length = 7 + math.floor(len(values) / 8)
+            else:
+                self.__adu.mbap_header.length = 7 + math.floor(len(values) / 8) + 1
+        if function_code == FunctionCode.WRITE_MULTIPLE_REGISTERS:
+            self.__adu.mbap_header.length = len(values) * 2 + 7
+
         self.__adu.mbap_header.unit_identifier = self.unitidentifier
         starting_address_lsb = starting_address & 0xFF
         starting_address_msb = (starting_address & 0xFF00) >> 8
@@ -603,7 +611,7 @@ def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
 
 
 if __name__ == "__main__":
-    modbus_client = ModbusClient('192.168.178.86', 502)
+    modbus_client = ModbusClient('10.211.55.3', 502)
     modbus_client.debug = True
     modbus_client.logging_level = logging.DEBUG
     modbus_client.connect()
@@ -617,7 +625,7 @@ if __name__ == "__main__":
         modbus_client.write_single_coil(8, 0)
         modbus_client.write_single_register(8, 4711)
         modbus_client.write_multiple_registers(8, [4711, 4712])
-        modbus_client.write_multiple_coils(8, [True, True])
+        modbus_client.write_multiple_coils(2, [True, True])
         print(modbus_client.read_discreteinputs(1, 1))
         print(modbus_client.read_coils(0, 14))
         print(modbus_client.read_holdingregisters(0, 14))
