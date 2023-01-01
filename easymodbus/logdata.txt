@@ -3059,3 +3059,1290 @@
 2022-12-31 14:56:24;---------Receive: 01 05 00 08 00 00 4c 08
 2022-12-31 14:56:24;Request to write single register (FC06), starting address: 8, value: 4711
 2022-12-31 14:56:24;---------Transmit: 01 06 00 08 12 67 45 42
+2023-01-01 15:30:12;Modbus client connected to TCP network, IP Address: 192.168.178.86, Port: 502
+2023-01-01 15:30:12;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:30:12;---------Transmit: 00 01 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;Modbus client connected to TCP network, IP Address: 192.168.178.86, Port: 502
+2023-01-01 15:31:42;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:42;---------Transmit: 00 01 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;---------Receive: 00 01 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:42;---------Transmit: 00 02 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:42;---------Receive: 00 02 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:42;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:42;---------Transmit: 00 03 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:42;---------Receive: 00 03 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:42;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:42;---------Transmit: 00 04 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:42;---------Receive: 00 04 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:42;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:42;---------Transmit: 00 05 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:42;---------Receive: 00 05 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:42;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:42;---------Transmit: 00 06 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:42;---------Receive: 00 06 00 00 00 04 01 02 01 00
+2023-01-01 15:31:42;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:42;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:42;---------Transmit: 00 07 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:42;---------Receive: 00 07 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:42;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:42;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:42;---------Transmit: 00 08 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:42;---------Receive: 00 08 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:42;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:42;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:42;---------Transmit: 00 09 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;---------Receive: 00 09 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:42;---------Transmit: 00 0a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:42;---------Receive: 00 0a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:42;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:42;---------Transmit: 00 0b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:42;---------Receive: 00 0b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:42;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:42;---------Transmit: 00 0c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:42;---------Receive: 00 0c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:42;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:42;---------Transmit: 00 0d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:42;---------Receive: 00 0d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:42;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:42;---------Transmit: 00 0e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:42;---------Receive: 00 0e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:42;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:42;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:42;---------Transmit: 00 0f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:42;---------Receive: 00 0f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:42;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:42;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:42;---------Transmit: 00 10 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:42;---------Receive: 00 10 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:42;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:42;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:42;---------Transmit: 00 11 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;---------Receive: 00 11 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:42;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:42;---------Transmit: 00 12 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:42;---------Receive: 00 12 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:42;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:42;---------Transmit: 00 13 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:42;---------Receive: 00 13 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:43;---------Transmit: 00 14 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:43;---------Receive: 00 14 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:43;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:43;---------Transmit: 00 15 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:43;---------Receive: 00 15 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:43;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:43;---------Transmit: 00 16 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:43;---------Receive: 00 16 00 00 00 04 01 02 01 00
+2023-01-01 15:31:43;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:43;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:43;---------Transmit: 00 17 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:43;---------Receive: 00 17 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:43;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:43;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:43;---------Transmit: 00 18 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:43;---------Receive: 00 18 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:43;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:43;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:43;---------Transmit: 00 19 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:43;---------Receive: 00 19 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:43;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:43;---------Transmit: 00 1a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:43;---------Receive: 00 1a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:43;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:43;---------Transmit: 00 1b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;---------Receive: 00 1b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:43;---------Transmit: 00 1c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:43;---------Receive: 00 1c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:43;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:43;---------Transmit: 00 1d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:43;---------Receive: 00 1d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:43;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:43;---------Transmit: 00 1e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:43;---------Receive: 00 1e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:43;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:43;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:43;---------Transmit: 00 1f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:43;---------Receive: 00 1f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:43;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:43;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:43;---------Transmit: 00 20 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:43;---------Receive: 00 20 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:43;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:43;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:43;---------Transmit: 00 21 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:43;---------Receive: 00 21 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:43;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:43;---------Transmit: 00 22 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:43;---------Receive: 00 22 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:43;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:43;---------Transmit: 00 23 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;---------Receive: 00 23 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:43;---------Transmit: 00 24 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:43;---------Receive: 00 24 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:43;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:43;---------Transmit: 00 25 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:43;---------Receive: 00 25 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:43;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:43;---------Transmit: 00 26 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:43;---------Receive: 00 26 00 00 00 04 01 02 01 00
+2023-01-01 15:31:43;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:43;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:43;---------Transmit: 00 27 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:43;---------Receive: 00 27 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:43;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:43;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:43;---------Transmit: 00 28 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:43;---------Receive: 00 28 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:43;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:43;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:43;---------Transmit: 00 29 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:43;---------Receive: 00 29 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:43;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:43;---------Transmit: 00 2a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:43;---------Receive: 00 2a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:43;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:43;---------Transmit: 00 2b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;---------Receive: 00 2b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:43;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:43;---------Transmit: 00 2c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:43;---------Receive: 00 2c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:43;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:43;---------Transmit: 00 2d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:44;---------Receive: 00 2d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:44;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:44;---------Transmit: 00 2e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:44;---------Receive: 00 2e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:44;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:44;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:44;---------Transmit: 00 2f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:44;---------Receive: 00 2f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:44;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:44;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:44;---------Transmit: 00 30 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:44;---------Receive: 00 30 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:44;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:44;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:44;---------Transmit: 00 31 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:44;---------Receive: 00 31 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:44;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:44;---------Transmit: 00 32 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:44;---------Receive: 00 32 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:44;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:44;---------Transmit: 00 33 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:44;---------Receive: 00 33 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:44;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:44;---------Transmit: 00 34 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:44;---------Receive: 00 34 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:44;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:44;---------Transmit: 00 35 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:44;---------Receive: 00 35 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:44;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:44;---------Transmit: 00 36 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:44;---------Receive: 00 36 00 00 00 04 01 02 01 00
+2023-01-01 15:31:44;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:44;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:44;---------Transmit: 00 37 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:44;---------Receive: 00 37 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:44;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:44;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:44;---------Transmit: 00 38 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:44;---------Receive: 00 38 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:44;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:44;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:44;---------Transmit: 00 39 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:44;---------Receive: 00 39 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:44;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:44;---------Transmit: 00 3a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:44;---------Receive: 00 3a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:44;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:44;---------Transmit: 00 3b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:44;---------Receive: 00 3b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:44;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:44;---------Transmit: 00 3c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:44;---------Receive: 00 3c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:44;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:44;---------Transmit: 00 3d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:44;---------Receive: 00 3d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:44;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:44;---------Transmit: 00 3e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:44;---------Receive: 00 3e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:44;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:44;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:44;---------Transmit: 00 3f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:44;---------Receive: 00 3f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:44;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:44;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:44;---------Transmit: 00 40 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:44;---------Receive: 00 40 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:44;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:44;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:44;---------Transmit: 00 41 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:44;---------Receive: 00 41 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:44;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:44;---------Transmit: 00 42 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:44;---------Receive: 00 42 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:44;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:44;---------Transmit: 00 43 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:44;---------Receive: 00 43 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:44;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:45;---------Transmit: 00 44 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:45;---------Receive: 00 44 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:45;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:45;---------Transmit: 00 45 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:45;---------Receive: 00 45 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:45;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:45;---------Transmit: 00 46 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:45;---------Receive: 00 46 00 00 00 04 01 02 01 00
+2023-01-01 15:31:45;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:45;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 47 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:45;---------Receive: 00 47 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:45;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:45;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 48 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:45;---------Receive: 00 48 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:45;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:45;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:45;---------Transmit: 00 49 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:45;---------Receive: 00 49 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:45;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:45;---------Transmit: 00 4a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:45;---------Receive: 00 4a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:45;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:45;---------Transmit: 00 4b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:45;---------Receive: 00 4b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:45;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:45;---------Transmit: 00 4c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:45;---------Receive: 00 4c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:45;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:45;---------Transmit: 00 4d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:45;---------Receive: 00 4d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:45;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:45;---------Transmit: 00 4e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:45;---------Receive: 00 4e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:45;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:45;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 4f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:45;---------Receive: 00 4f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:45;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:45;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 50 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:45;---------Receive: 00 50 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:45;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:45;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:45;---------Transmit: 00 51 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:45;---------Receive: 00 51 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:45;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:45;---------Transmit: 00 52 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:45;---------Receive: 00 52 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:45;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:45;---------Transmit: 00 53 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:45;---------Receive: 00 53 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:45;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:45;---------Transmit: 00 54 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:45;---------Receive: 00 54 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:45;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:45;---------Transmit: 00 55 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:45;---------Receive: 00 55 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:45;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:45;---------Transmit: 00 56 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:45;---------Receive: 00 56 00 00 00 04 01 02 01 00
+2023-01-01 15:31:45;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:45;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 57 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:45;---------Receive: 00 57 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:45;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:45;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 58 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:45;---------Receive: 00 58 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:45;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:45;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:45;---------Transmit: 00 59 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:45;---------Receive: 00 59 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:45;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:45;---------Transmit: 00 5a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:45;---------Receive: 00 5a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:45;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:45;---------Transmit: 00 5b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:45;---------Receive: 00 5b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:45;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:45;---------Transmit: 00 5c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:45;---------Receive: 00 5c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:45;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:45;---------Transmit: 00 5d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:45;---------Receive: 00 5d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:45;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:45;---------Transmit: 00 5e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:45;---------Receive: 00 5e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:45;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:45;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:45;---------Transmit: 00 5f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 5f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:46;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:46;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 60 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 60 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:46;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:46;---------Transmit: 00 61 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;---------Receive: 00 61 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:46;---------Transmit: 00 62 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:46;---------Receive: 00 62 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:46;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:46;---------Transmit: 00 63 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:46;---------Receive: 00 63 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:46;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:46;---------Transmit: 00 64 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:46;---------Receive: 00 64 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:46;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:46;---------Transmit: 00 65 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:46;---------Receive: 00 65 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:46;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:46;---------Transmit: 00 66 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:46;---------Receive: 00 66 00 00 00 04 01 02 01 00
+2023-01-01 15:31:46;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:46;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 67 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 67 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:46;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:46;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 68 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 68 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:46;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:46;---------Transmit: 00 69 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;---------Receive: 00 69 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:46;---------Transmit: 00 6a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:46;---------Receive: 00 6a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:46;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:46;---------Transmit: 00 6b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:46;---------Receive: 00 6b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:46;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:46;---------Transmit: 00 6c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:46;---------Receive: 00 6c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:46;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:46;---------Transmit: 00 6d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:46;---------Receive: 00 6d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:46;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:46;---------Transmit: 00 6e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:46;---------Receive: 00 6e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:46;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:46;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 6f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 6f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:46;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:46;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 70 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 70 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:46;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:46;---------Transmit: 00 71 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;---------Receive: 00 71 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:46;---------Transmit: 00 72 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:46;---------Receive: 00 72 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:46;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:46;---------Transmit: 00 73 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:46;---------Receive: 00 73 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:46;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:46;---------Transmit: 00 74 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:46;---------Receive: 00 74 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:46;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:46;---------Transmit: 00 75 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:46;---------Receive: 00 75 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:46;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:46;---------Transmit: 00 76 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:46;---------Receive: 00 76 00 00 00 04 01 02 01 00
+2023-01-01 15:31:46;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:46;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 77 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 77 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:46;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:46;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:46;---------Transmit: 00 78 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:46;---------Receive: 00 78 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:46;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:46;---------Transmit: 00 79 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;---------Receive: 00 79 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:46;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:46;---------Transmit: 00 7a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;---------Receive: 00 7a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:47;---------Transmit: 00 7b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:47;---------Receive: 00 7b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:47;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:47;---------Transmit: 00 7c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:47;---------Receive: 00 7c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:47;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:47;---------Transmit: 00 7d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:47;---------Receive: 00 7d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:47;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:47;---------Transmit: 00 7e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:47;---------Receive: 00 7e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:47;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:47;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:47;---------Transmit: 00 7f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:47;---------Receive: 00 7f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:47;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:47;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:47;---------Transmit: 00 80 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:47;---------Receive: 00 80 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:47;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:47;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:47;---------Transmit: 00 81 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:47;---------Receive: 00 81 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:47;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:47;---------Transmit: 00 82 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;---------Receive: 00 82 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:47;---------Transmit: 00 83 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:47;---------Receive: 00 83 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:47;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:47;---------Transmit: 00 84 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:47;---------Receive: 00 84 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:47;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:47;---------Transmit: 00 85 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:47;---------Receive: 00 85 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:47;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:47;---------Transmit: 00 86 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:47;---------Receive: 00 86 00 00 00 04 01 02 01 00
+2023-01-01 15:31:47;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:47;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:47;---------Transmit: 00 87 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:47;---------Receive: 00 87 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:47;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:47;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:47;---------Transmit: 00 88 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:47;---------Receive: 00 88 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:47;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:47;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:47;---------Transmit: 00 89 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:47;---------Receive: 00 89 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:47;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:47;---------Transmit: 00 8a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;---------Receive: 00 8a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:47;---------Transmit: 00 8b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:47;---------Receive: 00 8b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:47;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:47;---------Transmit: 00 8c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:47;---------Receive: 00 8c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:47;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:47;---------Transmit: 00 8d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:47;---------Receive: 00 8d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:47;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:47;---------Transmit: 00 8e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:47;---------Receive: 00 8e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:47;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:47;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:47;---------Transmit: 00 8f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:47;---------Receive: 00 8f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:47;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:47;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:47;---------Transmit: 00 90 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:47;---------Receive: 00 90 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:47;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:47;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:47;---------Transmit: 00 91 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:47;---------Receive: 00 91 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:47;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:47;---------Transmit: 00 92 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;---------Receive: 00 92 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:47;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:48;---------Transmit: 00 93 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:48;---------Receive: 00 93 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:48;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:48;---------Transmit: 00 94 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:48;---------Receive: 00 94 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:48;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:48;---------Transmit: 00 95 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:48;---------Receive: 00 95 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:48;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:48;---------Transmit: 00 96 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:48;---------Receive: 00 96 00 00 00 04 01 02 01 00
+2023-01-01 15:31:48;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:48;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:48;---------Transmit: 00 97 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:48;---------Receive: 00 97 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:48;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:48;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:48;---------Transmit: 00 98 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:48;---------Receive: 00 98 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:48;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:48;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:48;---------Transmit: 00 99 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:48;---------Receive: 00 99 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:48;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:48;---------Transmit: 00 9a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:48;---------Receive: 00 9a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:48;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:48;---------Transmit: 00 9b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:48;---------Receive: 00 9b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:48;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:48;---------Transmit: 00 9c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:48;---------Receive: 00 9c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:48;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:48;---------Transmit: 00 9d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:48;---------Receive: 00 9d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:48;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:48;---------Transmit: 00 9e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:48;---------Receive: 00 9e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:48;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:48;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:48;---------Transmit: 00 9f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:48;---------Receive: 00 9f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:48;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:48;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:48;---------Transmit: 00 a0 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:48;---------Receive: 00 a0 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:48;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:48;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:48;---------Transmit: 00 a1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:48;---------Receive: 00 a1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:48;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:48;---------Transmit: 00 a2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:48;---------Receive: 00 a2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:48;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:48;---------Transmit: 00 a3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:48;---------Receive: 00 a3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:48;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:48;---------Transmit: 00 a4 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:48;---------Receive: 00 a4 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:48;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:48;---------Transmit: 00 a5 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:48;---------Receive: 00 a5 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:48;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:48;---------Transmit: 00 a6 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:48;---------Receive: 00 a6 00 00 00 04 01 02 01 00
+2023-01-01 15:31:48;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:48;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:48;---------Transmit: 00 a7 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:48;---------Receive: 00 a7 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:48;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:48;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:48;---------Transmit: 00 a8 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:48;---------Receive: 00 a8 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:48;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:48;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:49;---------Transmit: 00 a9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;---------Receive: 00 a9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:49;---------Transmit: 00 aa 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:49;---------Receive: 00 aa 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:49;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:49;---------Transmit: 00 ab 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:49;---------Receive: 00 ab 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:49;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:49;---------Transmit: 00 ac 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:49;---------Receive: 00 ac 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:49;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:49;---------Transmit: 00 ad 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:49;---------Receive: 00 ad 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:49;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:49;---------Transmit: 00 ae 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:49;---------Receive: 00 ae 00 00 00 04 01 02 01 00
+2023-01-01 15:31:49;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:49;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:49;---------Transmit: 00 af 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:49;---------Receive: 00 af 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:49;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:49;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:49;---------Transmit: 00 b0 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:49;---------Receive: 00 b0 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:49;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:49;---------Transmit: 00 b1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;---------Receive: 00 b1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:49;---------Transmit: 00 b2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:49;---------Receive: 00 b2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:49;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:49;---------Transmit: 00 b3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:49;---------Receive: 00 b3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:49;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:49;---------Transmit: 00 b4 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:49;---------Receive: 00 b4 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:49;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:49;---------Transmit: 00 b5 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:49;---------Receive: 00 b5 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:49;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:49;---------Transmit: 00 b6 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:49;---------Receive: 00 b6 00 00 00 04 01 02 01 00
+2023-01-01 15:31:49;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:49;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:49;---------Transmit: 00 b7 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:49;---------Receive: 00 b7 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:49;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:49;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:49;---------Transmit: 00 b8 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:49;---------Receive: 00 b8 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:49;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:49;---------Transmit: 00 b9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;---------Receive: 00 b9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:49;---------Transmit: 00 ba 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:49;---------Receive: 00 ba 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:49;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:49;---------Transmit: 00 bb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:49;---------Receive: 00 bb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:49;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:49;---------Transmit: 00 bc 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:49;---------Receive: 00 bc 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:49;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:49;---------Transmit: 00 bd 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:49;---------Receive: 00 bd 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:49;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:49;---------Transmit: 00 be 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:49;---------Receive: 00 be 00 00 00 04 01 02 01 00
+2023-01-01 15:31:49;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:49;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:49;---------Transmit: 00 bf 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:49;---------Receive: 00 bf 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:49;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:49;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:49;---------Transmit: 00 c0 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:49;---------Receive: 00 c0 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:49;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:49;---------Transmit: 00 c1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;---------Receive: 00 c1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:49;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:49;---------Transmit: 00 c2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:50;---------Receive: 00 c2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:50;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:50;---------Transmit: 00 c3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:50;---------Receive: 00 c3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:50;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:50;---------Transmit: 00 c4 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:50;---------Receive: 00 c4 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:50;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:50;---------Transmit: 00 c5 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:50;---------Receive: 00 c5 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:50;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:50;---------Transmit: 00 c6 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:50;---------Receive: 00 c6 00 00 00 04 01 02 01 00
+2023-01-01 15:31:50;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:50;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:50;---------Transmit: 00 c7 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:50;---------Receive: 00 c7 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:50;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:50;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:50;---------Transmit: 00 c8 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:50;---------Receive: 00 c8 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:50;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:50;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:50;---------Transmit: 00 c9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:50;---------Receive: 00 c9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:50;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:50;---------Transmit: 00 ca 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:50;---------Receive: 00 ca 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:50;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:50;---------Transmit: 00 cb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:50;---------Receive: 00 cb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:50;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:50;---------Transmit: 00 cc 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:50;---------Receive: 00 cc 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:50;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:50;---------Transmit: 00 cd 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:50;---------Receive: 00 cd 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:50;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:50;---------Transmit: 00 ce 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:50;---------Receive: 00 ce 00 00 00 04 01 02 01 00
+2023-01-01 15:31:50;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:50;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:50;---------Transmit: 00 cf 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:50;---------Receive: 00 cf 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:50;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:50;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:50;---------Transmit: 00 d0 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:50;---------Receive: 00 d0 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:50;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:50;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:50;---------Transmit: 00 d1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:50;---------Receive: 00 d1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:50;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:50;---------Transmit: 00 d2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:50;---------Receive: 00 d2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:50;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:50;---------Transmit: 00 d3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:50;---------Receive: 00 d3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:50;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:50;---------Transmit: 00 d4 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:50;---------Receive: 00 d4 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:50;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:50;---------Transmit: 00 d5 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:50;---------Receive: 00 d5 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:50;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:50;---------Transmit: 00 d6 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:50;---------Receive: 00 d6 00 00 00 04 01 02 01 00
+2023-01-01 15:31:50;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:50;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:50;---------Transmit: 00 d7 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:50;---------Receive: 00 d7 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:50;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:50;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:50;---------Transmit: 00 d8 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:50;---------Receive: 00 d8 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:50;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:50;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:51;---------Transmit: 00 d9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;---------Receive: 00 d9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:51;---------Transmit: 00 da 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;---------Receive: 00 da 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:51;---------Transmit: 00 db 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;---------Receive: 00 db 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:51;---------Transmit: 00 dc 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:51;---------Receive: 00 dc 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:51;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:51;---------Transmit: 00 dd 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:51;---------Receive: 00 dd 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:51;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:51;---------Transmit: 00 de 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:51;---------Receive: 00 de 00 00 00 04 01 02 01 00
+2023-01-01 15:31:51;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:51;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:51;---------Transmit: 00 df 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:51;---------Receive: 00 df 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:51;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:51;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:51;---------Transmit: 00 e0 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:51;---------Receive: 00 e0 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:51;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:51;---------Transmit: 00 e1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;---------Receive: 00 e1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:51;---------Transmit: 00 e2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;---------Receive: 00 e2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:51;---------Transmit: 00 e3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;---------Receive: 00 e3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:51;---------Transmit: 00 e4 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:51;---------Receive: 00 e4 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:51;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:51;---------Transmit: 00 e5 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:51;---------Receive: 00 e5 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:51;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:51;---------Transmit: 00 e6 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:51;---------Receive: 00 e6 00 00 00 04 01 02 01 00
+2023-01-01 15:31:51;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:51;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:51;---------Transmit: 00 e7 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:51;---------Receive: 00 e7 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:51;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:51;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:51;---------Transmit: 00 e8 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:51;---------Receive: 00 e8 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:51;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:51;---------Transmit: 00 e9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;---------Receive: 00 e9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:51;---------Transmit: 00 ea 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;---------Receive: 00 ea 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:51;---------Transmit: 00 eb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;---------Receive: 00 eb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:51;---------Transmit: 00 ec 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:51;---------Receive: 00 ec 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:51;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:51;---------Transmit: 00 ed 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:51;---------Receive: 00 ed 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:51;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:51;---------Transmit: 00 ee 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:51;---------Receive: 00 ee 00 00 00 04 01 02 01 00
+2023-01-01 15:31:51;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:51;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:51;---------Transmit: 00 ef 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:51;---------Receive: 00 ef 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:51;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:51;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:51;---------Transmit: 00 f0 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:51;---------Receive: 00 f0 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:51;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:51;---------Transmit: 00 f1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;---------Receive: 00 f1 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:51;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:51;---------Transmit: 00 f2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;---------Receive: 00 f2 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:51;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:51;---------Transmit: 00 f3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;---------Receive: 00 f3 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:51;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:51;---------Transmit: 00 f4 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:51;---------Receive: 00 f4 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:51;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:52;---------Transmit: 00 f5 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:52;---------Receive: 00 f5 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:52;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:52;---------Transmit: 00 f6 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:52;---------Receive: 00 f6 00 00 00 04 01 02 01 00
+2023-01-01 15:31:52;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:52;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:52;---------Transmit: 00 f7 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:52;---------Receive: 00 f7 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:52;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:52;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:52;---------Transmit: 00 f8 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:52;---------Receive: 00 f8 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:52;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:52;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:52;---------Transmit: 00 f9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:52;---------Receive: 00 f9 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:52;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:52;---------Transmit: 00 fa 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:52;---------Receive: 00 fa 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:52;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:52;---------Transmit: 00 fb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:52;---------Receive: 00 fb 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:52;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:52;---------Transmit: 00 fc 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:52;---------Receive: 00 fc 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:52;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:52;---------Transmit: 00 fd 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:52;---------Receive: 00 fd 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:52;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:52;---------Transmit: 00 fe 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:52;---------Receive: 00 fe 00 00 00 04 01 02 01 00
+2023-01-01 15:31:52;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:52;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:52;---------Transmit: 00 ff 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:52;---------Receive: 00 ff 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:52;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:52;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:52;---------Transmit: 01 00 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:52;---------Receive: 01 00 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:52;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:52;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:52;---------Transmit: 01 01 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:52;---------Receive: 01 01 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:52;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:52;---------Transmit: 01 02 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:52;---------Receive: 01 02 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:52;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:52;---------Transmit: 01 03 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:52;---------Receive: 01 03 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:52;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:52;---------Transmit: 01 04 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:52;---------Receive: 01 04 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:52;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:52;---------Transmit: 01 05 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:52;---------Receive: 01 05 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:52;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:52;---------Transmit: 01 06 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:52;---------Receive: 01 06 00 00 00 04 01 02 01 00
+2023-01-01 15:31:52;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:52;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:52;---------Transmit: 01 07 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:52;---------Receive: 01 07 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:52;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:52;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:52;---------Transmit: 01 08 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:52;---------Receive: 01 08 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:52;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:52;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:52;---------Transmit: 01 09 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:52;---------Receive: 01 09 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:52;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:52;---------Transmit: 01 0a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:52;---------Receive: 01 0a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:52;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:52;---------Transmit: 01 0b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:52;---------Receive: 01 0b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:52;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:52;---------Transmit: 01 0c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:52;---------Receive: 01 0c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:52;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:52;---------Transmit: 01 0d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:52;---------Receive: 01 0d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:52;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:52;---------Transmit: 01 0e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:53;---------Receive: 01 0e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:53;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:53;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:53;---------Transmit: 01 0f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:53;---------Receive: 01 0f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:53;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:53;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:53;---------Transmit: 01 10 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:53;---------Receive: 01 10 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:53;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:53;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:53;---------Transmit: 01 11 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:53;---------Receive: 01 11 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:53;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:53;---------Transmit: 01 12 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:53;---------Receive: 01 12 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:53;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:53;---------Transmit: 01 13 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:53;---------Receive: 01 13 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:53;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:53;---------Transmit: 01 14 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:53;---------Receive: 01 14 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:53;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:53;---------Transmit: 01 15 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:53;---------Receive: 01 15 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:53;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:53;---------Transmit: 01 16 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:53;---------Receive: 01 16 00 00 00 04 01 02 01 00
+2023-01-01 15:31:53;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:53;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:53;---------Transmit: 01 17 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:53;---------Receive: 01 17 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:53;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:53;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:53;---------Transmit: 01 18 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:53;---------Receive: 01 18 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:53;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:53;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:53;---------Transmit: 01 19 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:53;---------Receive: 01 19 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:53;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:53;---------Transmit: 01 1a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:53;---------Receive: 01 1a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:53;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:53;---------Transmit: 01 1b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:53;---------Receive: 01 1b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:53;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:53;---------Transmit: 01 1c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:53;---------Receive: 01 1c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:53;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:53;---------Transmit: 01 1d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:53;---------Receive: 01 1d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:53;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:53;---------Transmit: 01 1e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:53;---------Receive: 01 1e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:53;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:53;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:53;---------Transmit: 01 1f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:53;---------Receive: 01 1f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:53;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:53;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:53;---------Transmit: 01 20 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:53;---------Receive: 01 20 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:53;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:53;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:53;---------Transmit: 01 21 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:53;---------Receive: 01 21 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:53;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:53;---------Transmit: 01 22 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:53;---------Receive: 01 22 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:53;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:53;---------Transmit: 01 23 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:54;---------Receive: 01 23 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:54;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:54;---------Transmit: 01 24 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:54;---------Receive: 01 24 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:54;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:54;---------Transmit: 01 25 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:54;---------Receive: 01 25 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:54;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:54;---------Transmit: 01 26 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:54;---------Receive: 01 26 00 00 00 04 01 02 01 00
+2023-01-01 15:31:54;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:54;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:54;---------Transmit: 01 27 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:54;---------Receive: 01 27 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:54;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:54;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:54;---------Transmit: 01 28 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:54;---------Receive: 01 28 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:54;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:54;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:54;---------Transmit: 01 29 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:54;---------Receive: 01 29 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:54;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:54;---------Transmit: 01 2a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:54;---------Receive: 01 2a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:54;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:54;---------Transmit: 01 2b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:54;---------Receive: 01 2b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:54;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:54;---------Transmit: 01 2c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:54;---------Receive: 01 2c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:54;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:54;---------Transmit: 01 2d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:54;---------Receive: 01 2d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:54;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:54;---------Transmit: 01 2e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:54;---------Receive: 01 2e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:54;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:54;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:54;---------Transmit: 01 2f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:54;---------Receive: 01 2f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:54;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:54;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:54;---------Transmit: 01 30 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:54;---------Receive: 01 30 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:54;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:54;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:54;---------Transmit: 01 31 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:54;---------Receive: 01 31 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:54;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:54;---------Transmit: 01 32 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:54;---------Receive: 01 32 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:54;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:54;---------Transmit: 01 33 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:54;---------Receive: 01 33 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:54;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:54;---------Transmit: 01 34 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:54;---------Receive: 01 34 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:54;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:54;---------Transmit: 01 35 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:54;---------Receive: 01 35 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:54;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:54;---------Transmit: 01 36 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:54;---------Receive: 01 36 00 00 00 04 01 02 01 00
+2023-01-01 15:31:54;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:54;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:54;---------Transmit: 01 37 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:54;---------Receive: 01 37 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:54;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:54;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:54;---------Transmit: 01 38 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:54;---------Receive: 01 38 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:55;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:55;---------Transmit: 01 39 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:55;---------Receive: 01 39 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:55;---------Transmit: 01 3a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:55;---------Receive: 01 3a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:55;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:55;---------Transmit: 01 3b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:55;---------Receive: 01 3b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:55;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:55;---------Transmit: 01 3c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:55;---------Receive: 01 3c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:55;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:55;---------Transmit: 01 3d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:55;---------Receive: 01 3d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:55;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:55;---------Transmit: 01 3e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:55;---------Receive: 01 3e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:55;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:55;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:55;---------Transmit: 01 3f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:55;---------Receive: 01 3f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:55;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:55;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:55;---------Transmit: 01 40 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:55;---------Receive: 01 40 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:55;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:55;---------Transmit: 01 41 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:55;---------Receive: 01 41 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:55;---------Transmit: 01 42 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:55;---------Receive: 01 42 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:55;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:55;---------Transmit: 01 43 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:55;---------Receive: 01 43 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:55;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:55;---------Transmit: 01 44 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:55;---------Receive: 01 44 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:55;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:55;---------Transmit: 01 45 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:55;---------Receive: 01 45 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:55;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:55;---------Transmit: 01 46 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:55;---------Receive: 01 46 00 00 00 04 01 02 01 00
+2023-01-01 15:31:55;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:55;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:55;---------Transmit: 01 47 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:55;---------Receive: 01 47 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:55;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:55;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:55;---------Transmit: 01 48 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:55;---------Receive: 01 48 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:55;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:55;---------Transmit: 01 49 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:55;---------Receive: 01 49 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:55;---------Transmit: 01 4a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:55;---------Receive: 01 4a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:55;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:55;---------Transmit: 01 4b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:55;---------Receive: 01 4b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:55;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:55;---------Transmit: 01 4c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:55;---------Receive: 01 4c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:55;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:55;---------Transmit: 01 4d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:55;---------Receive: 01 4d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:55;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:55;---------Transmit: 01 4e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:55;---------Receive: 01 4e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:55;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:55;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:55;---------Transmit: 01 4f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:55;---------Receive: 01 4f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:55;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:55;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:55;---------Transmit: 01 50 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:55;---------Receive: 01 50 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:55;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:55;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:55;---------Transmit: 01 51 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;---------Receive: 01 51 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:56;---------Transmit: 01 52 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:56;---------Receive: 01 52 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:56;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:56;---------Transmit: 01 53 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:56;---------Receive: 01 53 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:56;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:56;---------Transmit: 01 54 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:56;---------Receive: 01 54 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:56;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:56;---------Transmit: 01 55 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:56;---------Receive: 01 55 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:56;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:56;---------Transmit: 01 56 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:56;---------Receive: 01 56 00 00 00 04 01 02 01 00
+2023-01-01 15:31:56;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:56;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:56;---------Transmit: 01 57 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:56;---------Receive: 01 57 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:56;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:56;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:56;---------Transmit: 01 58 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:56;---------Receive: 01 58 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:56;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:56;---------Transmit: 01 59 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;---------Receive: 01 59 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:56;---------Transmit: 01 5a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:56;---------Receive: 01 5a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:56;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:56;---------Transmit: 01 5b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:56;---------Receive: 01 5b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:56;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:56;---------Transmit: 01 5c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:56;---------Receive: 01 5c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:56;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:56;---------Transmit: 01 5d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:56;---------Receive: 01 5d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:56;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:56;---------Transmit: 01 5e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:56;---------Receive: 01 5e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:56;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:56;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:56;---------Transmit: 01 5f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:56;---------Receive: 01 5f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:56;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:56;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:56;---------Transmit: 01 60 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:56;---------Receive: 01 60 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:56;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:56;---------Transmit: 01 61 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;---------Receive: 01 61 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:56;---------Transmit: 01 62 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:56;---------Receive: 01 62 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:56;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:56;---------Transmit: 01 63 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:56;---------Receive: 01 63 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:56;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:56;---------Transmit: 01 64 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:56;---------Receive: 01 64 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:56;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:56;---------Transmit: 01 65 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:56;---------Receive: 01 65 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:56;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:56;---------Transmit: 01 66 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:56;---------Receive: 01 66 00 00 00 04 01 02 01 00
+2023-01-01 15:31:56;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:56;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:56;---------Transmit: 01 67 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:56;---------Receive: 01 67 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:56;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:56;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:56;---------Transmit: 01 68 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:56;---------Receive: 01 68 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:56;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:56;---------Transmit: 01 69 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;---------Receive: 01 69 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:56;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:56;---------Transmit: 01 6a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:57;---------Receive: 01 6a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:57;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:57;---------Transmit: 01 6b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:57;---------Receive: 01 6b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:57;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:57;---------Transmit: 01 6c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:57;---------Receive: 01 6c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:57;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:57;---------Transmit: 01 6d 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:57;---------Receive: 01 6d 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:57;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:57;---------Transmit: 01 6e 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:57;---------Receive: 01 6e 00 00 00 04 01 02 01 00
+2023-01-01 15:31:57;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:57;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:57;---------Transmit: 01 6f 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:57;---------Receive: 01 6f 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:57;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:57;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:57;---------Transmit: 01 70 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:57;---------Receive: 01 70 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:57;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:57;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:57;---------Transmit: 01 71 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:57;---------Receive: 01 71 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:57;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:57;---------Transmit: 01 72 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:57;---------Receive: 01 72 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:57;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:57;---------Transmit: 01 73 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:57;---------Receive: 01 73 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:57;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:57;---------Transmit: 01 74 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:57;---------Receive: 01 74 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:57;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:57;---------Transmit: 01 75 00 00 00 06 01 0f 00 08 00 02 01 03
+2023-01-01 15:31:57;---------Receive: 01 75 00 00 00 06 01 0f 00 08 00 02
+2023-01-01 15:31:57;Request to read discrete inputs (FC02), starting address: 1, quantity: 1
+2023-01-01 15:31:57;---------Transmit: 01 76 00 00 00 06 01 02 00 01 00 01
+2023-01-01 15:31:57;---------Receive: 01 76 00 00 00 04 01 02 01 00
+2023-01-01 15:31:57;Response to read discrete inputs (FC02), values: [False]
+2023-01-01 15:31:57;Request to read coils (FC01), starting address: 0, quantity: 14
+2023-01-01 15:31:57;---------Transmit: 01 77 00 00 00 06 01 01 00 00 00 0e
+2023-01-01 15:31:57;---------Receive: 01 77 00 00 00 05 01 01 02 02 03
+2023-01-01 15:31:57;Response to read coils (FC01), values: [False, True, False, False, False, False, False, False, True, True, False, False, False, False]
+2023-01-01 15:31:57;Request to read Holding Registers (FC03), starting address: 0, quantity: 14
+2023-01-01 15:31:57;---------Transmit: 01 78 00 00 00 06 01 03 00 00 00 0e
+2023-01-01 15:31:57;---------Receive: 01 78 00 00 00 1f 01 03 1c 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 12 67 12 68 00 00 00 00 00 00 00 00
+2023-01-01 15:31:57;Response to Holding Registers (FC03), values: [0, 0, 0, 0, 0, 0, 0, 0, 4711, 4712, 0, 0, 0, 0]
+2023-01-01 15:31:57;Request to write single coil (FC05), starting address: 1, value: 1
+2023-01-01 15:31:57;---------Transmit: 01 79 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:57;---------Receive: 01 79 00 00 00 06 01 05 00 01 ff 00
+2023-01-01 15:31:57;Request to write single coil (FC05), starting address: 8, value: 0
+2023-01-01 15:31:57;---------Transmit: 01 7a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:57;---------Receive: 01 7a 00 00 00 06 01 05 00 08 00 00
+2023-01-01 15:31:57;Request to write single register (FC06), starting address: 8, value: 4711
+2023-01-01 15:31:57;---------Transmit: 01 7b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:57;---------Receive: 01 7b 00 00 00 06 01 06 00 08 12 67
+2023-01-01 15:31:57;Request to write multiple registers (FC16), starting address: 8, values: [4711, 4712]
+2023-01-01 15:31:57;---------Transmit: 01 7c 00 00 00 06 01 10 00 08 00 02 04 12 67 12 68
+2023-01-01 15:31:57;---------Receive: 01 7c 00 00 00 06 01 10 00 08 00 02
+2023-01-01 15:31:57;Request to write multiple coil (FC15), starting address: 8, values: [True, True]
+2023-01-01 15:31:57;---------Transmit: 01 7d 00 00 00 06 01 0f 00 08 00 02 01 03

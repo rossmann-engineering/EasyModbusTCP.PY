@@ -8,7 +8,7 @@ import socket
 import struct
 import threading
 import logging
-from datetime import time
+import time
 from logging.handlers import RotatingFileHandler
 import math
 from modbus_protocol import *
@@ -603,7 +603,7 @@ def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
 
 
 if __name__ == "__main__":
-    modbus_client = ModbusClient('COM3')
+    modbus_client = ModbusClient('192.168.178.86', 502)
     modbus_client.debug = True
     modbus_client.logging_level = logging.DEBUG
     modbus_client.connect()
