@@ -26,8 +26,7 @@ pip install EasyModbus
 
 ### Requirements:
 
-Python 2.7  
-Python 3.6
+Python 3.7
 
 pyserial (only for Modbus RTU)
 
@@ -96,9 +95,9 @@ modbus_client.close()
 The following functioncodes are used to read values from the remote device (Modbus-TCP Server or Modbus-RTU Client)
 
 - Read Coils (FC1) - Method "read_coils"
-- Read Discrete Inputs (FC2) - Method "read_discreteinputs"
-- Read Holding Registers (FC3) - Method "read_holdingregisters"
-- Read Input Registers (FC4) - Method "read_inputregisters"
+- Read Discrete Inputs (FC2) - Method "read_discrete_inputs"
+- Read Holding Registers (FC3) - Method "read_holding_registers"
+- Read Input Registers (FC4) - Method "read_input_registers"
 
 IMPORTANT: Usually there is a Register shift between the request and the server address range
 The Server address Range starts with address "1" but the Request that is sent starts with "0"

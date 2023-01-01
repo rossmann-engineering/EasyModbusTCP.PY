@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-#1: setup.py sdist
+#1: python setup.py sdist
 #2: twine upload dist/* --repository-url https://upload.pypi.org/legacy/
 
 # read the contents of your README file
@@ -14,7 +14,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='EasyModbus',
     packages = ['easymodbus'],
-    version      = '1.4.0',
+    version      = '2.0.0',
     license      = 'MIT',
     author       = 'Stefan Rossmann',
     author_email = 'info@rossmann-engineering.de',
