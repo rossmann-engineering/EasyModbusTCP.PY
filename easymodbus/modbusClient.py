@@ -191,7 +191,7 @@ class ModbusClient(object):
         """
         logging.info("Request to read Input Registers (FC04), starting address: {0}, quantity: {1}"
                      .format(str(starting_address), str(quantity)))
-        return_value = self.read_analogs(starting_address, quantity, FunctionCode.READ_INPUT_REGISTERS)
+        return_value = self.read_execute_read_order(starting_address, quantity, FunctionCode.READ_INPUT_REGISTERS)
         logging.info("Response to Input Registers (FC04), values: {0}"
                      .format(str(return_value)))
         return return_value
@@ -562,7 +562,36 @@ def convert_double_to_two_registers(doubleValue, register_order=RegisterOrder.lo
     return myList
 
 
-def convert_float_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh):
+def convert_quad_to_four_registers(quadValue, register_order=RegisterOrder.lowHigh):
+    """
+    Convert 64 Bit Value to four 16 Bit Value to send as Modbus Registers
+    quadValue: Value to be converted
+    register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh
+    return: 16 Bit Register values int[]
+    """
+    myList = list()
+
+    # Append Least Significant Word
+    myList.append(int(quadValue & 0x000000000000FFFF))
+    # Append a little bit more Significant Word
+    myList.append(int((quadValue & 0x00000000FFFF0000) >> 16))
+    # Append a bit more Significant Word
+    myList.append(int((quadValue & 0x0000FFFF00000000) >> 32))
+    # Append Most Significant Word
+    myList.append(int((quadValue & 0xFFFF000000000000) >> 48))
+    if register_order == RegisterOrder.highLow:
+        # Append Most Significant Word
+        myList[0] = (int((quadValue & 0xFFFF000000000000) >> 48))
+        # Append a little bit less Significant Word
+        myList[1] = (int((quadValue & 0x0000FFFF00000000) >> 32))
+        # Append a bit less Significant Word
+        myList[2] = (int((quadValue & 0x00000000FFFF0000) >> 16))
+        # Append Least Significant Word
+        myList[3] = (int(quadValue & 0x000000000000FFFF))
+    return myList
+
+
+def convert_float32_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh):
     """
     Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers
     floatValue: Value to be converted
@@ -578,9 +607,30 @@ def convert_float_to_two_registers(floatValue, register_order=RegisterOrder.lowH
     return myList
 
 
+def convert_float64_to_four_registers(float64Value, register_order=RegisterOrder.lowHigh):
+    """
+    Convert 64 Bit real Value to two 16 Bit Value to send as Modbus Registers
+    floatValue: Value to be converted
+    return: 16 Bit Register values int[]
+    """
+    myList = list()
+    s = bytearray(struct.pack('<d', float64Value))  # little endian
+    myList.append(s[0] | (s[1] << 8))  # Append Least Significant Word
+    myList.append(s[2] | (s[3] << 8))  # Append Least + 1 Significant Word
+    myList.append(s[4] | (s[5] << 8))  # Append Most - 1 Significant Word
+    myList.append(s[6] | (s[7] << 8))  # Append Most Significant Word
+    if register_order == RegisterOrder.highLow:
+        myList[0] = s[6] | (s[7] << 8)
+        myList[1] = s[4] | (s[5] << 8)
+        myList[2] = s[2] | (s[3] << 8)
+        myList[3] = s[0] | (s[1] << 8)
+    return myList
+
+
 def convert_registers_to_double(registers, register_order=RegisterOrder.lowHigh):
     """
-    Convert two 16 Bit Registers to 32 Bit long value - Used to receive 32 Bit values from Modbus (Modbus Registers are 16 Bit long)
+    Convert two 16 Bit Registers to 32 Bit long value - 
+    Used to receive 32Bit values from Modbus (Modbus Registers are 16 Bit long)
     registers: 16 Bit Registers
     return: 32 bit value
     """
@@ -590,9 +640,24 @@ def convert_registers_to_double(registers, register_order=RegisterOrder.lowHigh)
     return returnValue
 
 
-def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
+def convert_registers_to_quad(registers, register_order=RegisterOrder.lowHigh):
+    #TODO: TEST IF SIGNED OR UNSIGNED
     """
-    Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
+    Convert two 16 Bit Registers to 64 Bit long value - 
+    Used to receive 64Bit values from Modbus (Modbus Registers are 16 Bit long)
+    registers: 16 Bit Registers
+    return: 64 bit value
+    """
+    returnValue = (int(registers[0]) & 0x000000000000FFFF) | (int((registers[1]) << 16) & 0x00000000FFFF0000) | (int((registers[2]) << 32) & 0x0000FFFF00000000) | (int((registers[3]) << 48) & 0xFFFF000000000000)
+    if register_order == RegisterOrder.highLow:
+        returnValue = (int(registers[3]) & 0x000000000000FFFF) | (int((registers[2]) << 16) & 0x00000000FFFF0000) | (int((registers[1]) << 32) & 0x0000FFFF00000000) | (int((registers[0]) << 48) & 0xFFFF000000000000)
+    return returnValue
+
+
+def convert_registers_to_float32(registers, register_order=RegisterOrder.lowHigh):
+    """
+    Convert two 16 Bit Registers to 32 Bit real value - 
+    Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
     registers: 16 Bit Registers
     return: 32 bit value real
     """
@@ -607,6 +672,34 @@ def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
         b[0] = (registers[1] & 0xff)
         b[1] = (registers[1] & 0xff00) >> 8
     returnValue = struct.unpack('<f', b)  # little Endian
+    return returnValue
+
+
+def convert_registers_to_float64(registers, register_order=RegisterOrder.lowHigh):
+    """
+    Convert two 16 Bit Registers to 64 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
+    registers: 16 Bit Registers
+    return: 64 bit value real
+    """
+    b = bytearray(8)
+    b[0] = registers[0] & 0xff
+    b[1] = (registers[0] & 0xff00) >> 8
+    b[2] = (registers[1] & 0xff)
+    b[3] = (registers[1] & 0xff00) >> 8
+    b[4] = (registers[2] & 0xff)
+    b[5] = (registers[2] & 0xff00) >> 8
+    b[6] = (registers[3] & 0xff)
+    b[7] = (registers[3] & 0xff00) >> 8
+    if register_order == RegisterOrder.highLow:
+        b[6] = registers[0] & 0xff
+        b[7] = (registers[0] & 0xff00) >> 8
+        b[4] = registers[0] & 0xff
+        b[5] = (registers[0] & 0xff00) >> 8
+        b[2] = registers[0] & 0xff
+        b[3] = (registers[0] & 0xff00) >> 8
+        b[0] = (registers[1] & 0xff)
+        b[1] = (registers[1] & 0xff00) >> 8
+    returnValue = struct.unpack('<d', b)  # little Endian
     return returnValue
 
 
