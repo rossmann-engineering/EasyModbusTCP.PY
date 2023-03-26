@@ -591,7 +591,7 @@ def convert_quad_to_four_registers(quadValue, register_order=RegisterOrder.lowHi
     return myList
 
 
-def convert_float32_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh):
+def convert_float_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh):
     """
     Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers
     floatValue: Value to be converted
@@ -654,7 +654,7 @@ def convert_registers_to_quad(registers, register_order=RegisterOrder.lowHigh):
     return returnValue
 
 
-def convert_registers_to_float32(registers, register_order=RegisterOrder.lowHigh):
+def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
     """
     Convert two 16 Bit Registers to 32 Bit real value - 
     Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
