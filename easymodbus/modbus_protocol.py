@@ -96,7 +96,7 @@ class PDU:
             if exception_code == 1:
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             elif exception_code == 2:
-                raise Exceptions.starting_AddressInvalidException(
+                raise Exceptions.StartingAddressInvalidException(
                     "Starting address invalid or starting address + quantity invalid")
             elif exception_code == 3:
                 raise Exceptions.QuantityInvalidException("quantity invalid")
