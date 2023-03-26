@@ -444,14 +444,14 @@ class ModbusClient(object):
     @property
     def parity(self):
         """
-        Gets the of Parity in case of serial connection
+        Gets the value of Parity in case of serial connection
         """
         return self.__parity
 
     @parity.setter
     def parity(self, parity):
         """
-        Sets the of Parity in case of serial connection
+        Sets the value of Parity in case of serial connection
         Example modbusClient.Parity = Parity.even
         """
         self.__parity = parity
