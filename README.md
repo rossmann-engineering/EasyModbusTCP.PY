@@ -355,12 +355,25 @@ doubleValue: Value to be converted
 register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 16 Bit Register values int[]  
 
+**def convert_quad_to_four_registers(quadValue, register_order=RegisterOrder.lowHigh):
+
+Convert 64 Bit Value to four 16 Bit Value to send as Modbus Registers
+quadValue: Value to be converted
+register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh
+return: 16 Bit Register values int[]
+
 **def convert_float_to_two_registers(floatValue, register_order=RegisterOrder.lowHigh)**
 
 Convert 32 Bit real Value to two 16 Bit Value to send as Modbus Registers  
 floatValue: Value to be converted  
 register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 16 Bit Register values int[]  
+
+**def convert_float64_to_four_registers(float64Value, register_order=RegisterOrder.lowHigh):
+
+Convert 64 Bit real Value to two 16 Bit Value to send as Modbus Registers
+floatValue: Value to be converted
+return: 16 Bit Register values int[]
 
 **def convert_registers_to_double(registers, register_order=RegisterOrder.lowHigh)**
 
@@ -369,9 +382,21 @@ registers: 16 Bit Registers
 register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 32 bit value  
 
+def convert_registers_to_quad(registers, register_order=RegisterOrder.lowHigh):
+
+Convert four 16 Bit Registers to 64 Bit long value - Used to receive 64Bit values from Modbus (Modbus Registers are 16 Bit long)
+registers: 16 Bit Registers
+return: 64 bit value
+
 **def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh)**
 
 Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)  
 registers: 16 Bit Registers  
 register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 32 bit value real 
+
+**def convert_registers_to_float64(registers, register_order=RegisterOrder.lowHigh):
+
+Convert two 16 Bit Registers to 64 Bit real value - Used to receive float values from Modbus (Modbus Registers are 16 Bit long)
+registers: 16 Bit Registers
+return: 64 bit value real
