@@ -78,7 +78,8 @@ class MBAPHeader:
 @dataclass
 class PDU:
     """
-    Dataclass which represents the PDU (Protocol Data Unit) - Both for Modbus RTU and Modbus TCP
+    Dataclass which represents the PDU (Protocol Data Unit) 
+    - Both for Modbus RTU and Modbus TCP
     function_code(1 Byte): Service specified by the Function code
     """
     function_code: FunctionCode = FunctionCode.READ_COILS
@@ -96,7 +97,7 @@ class PDU:
             if exception_code == 1:
                 raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
             elif exception_code == 2:
-                raise Exceptions.starting_addressInvalidException(
+                raise Exceptions.StartingAddressInvalidException(
                     "Starting address invalid or starting address + quantity invalid")
             elif exception_code == 3:
                 raise Exceptions.QuantityInvalidException("quantity invalid")
@@ -108,7 +109,8 @@ class PDU:
 @dataclass
 class ADU:
     """
-    Dataclass which represents the ADU (Application Data Unit) - Both for Modbus RTU and Modbus TCP
+    Dataclass which represents the ADU (Application Data Unit) 
+    - Both for Modbus RTU and Modbus TCP
     mbap_header: only relevant for Modbus TCP
     pdu: both for Modbus TCP and RTU
     crc: Error check only relevant for Modbus RTU
