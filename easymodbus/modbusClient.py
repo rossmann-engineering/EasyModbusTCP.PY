@@ -11,7 +11,7 @@ import logging
 import time
 from logging.handlers import RotatingFileHandler
 import math
-from modbus_protocol import *
+from easymodbus.modbus_protocol import *
 
 
 class ModbusClient(object):
