@@ -5,9 +5,7 @@ Created on 12.09.2016
 @author: Stefan Rossmann
 '''
 
-# @UnresolvedImport
-from modbusClient import *
-# @UnresolvedImport
+from easymodbus.modbusClient import *
     
 modbusClient = ModbusClient('127.0.0.1', 502)
 #modbusClient = ModbusClient('COM4')

@@ -11,7 +11,7 @@ import logging
 import time
 from logging.handlers import RotatingFileHandler
 import math
-from modbus_protocol import *
+from easymodbus.modbus_protocol import *
 
 
 class ModbusClient(object):
@@ -191,7 +191,7 @@ class ModbusClient(object):
         """
         logging.info("Request to read Input Registers (FC04), starting address: {0}, quantity: {1}"
                      .format(str(starting_address), str(quantity)))
-        return_value = self.read_analogs(starting_address, quantity, FunctionCode.READ_INPUT_REGISTERS)
+        return_value = self.execute_read_order(starting_address, quantity, FunctionCode.READ_INPUT_REGISTERS)
         logging.info("Response to Input Registers (FC04), values: {0}"
                      .format(str(return_value)))
         return return_value

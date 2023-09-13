@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 from enum import Enum, IntEnum
-import modbusException as Exceptions
+import easymodbus.modbusException as Exceptions
 
 
 class ModbusType(Enum):
