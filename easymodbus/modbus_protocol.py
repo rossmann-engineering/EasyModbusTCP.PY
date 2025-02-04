@@ -1,7 +1,7 @@
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum, IntEnum
-import modbusException as Exceptions
+import easymodbus.modbusException as Exceptions
 
 
 class ModbusType(Enum):
@@ -82,7 +82,7 @@ class PDU:
     function_code(1 Byte): Service specified by the Function code
     """
     function_code: FunctionCode = FunctionCode.READ_COILS
-    data: bytearray = bytearray()
+    data: bytearray = field(default_factory=bytearray)
     def encode(self):
         return_value = bytearray()
         return_value.append(self.function_code)
@@ -94,9 +94,9 @@ class PDU:
         if self.function_code >= 128:
             exception_code = data[1]
             if exception_code == 1:
-                raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
+                raise Exceptions.FunctionCodeNotSupportedException("Function code not supported by master")
             elif exception_code == 2:
-                raise Exceptions.starting_addressInvalidException(
+                raise Exceptions.StartingAddressInvalidException(
                     "Starting address invalid or starting address + quantity invalid")
             elif exception_code == 3:
                 raise Exceptions.QuantityInvalidException("quantity invalid")
@@ -113,8 +113,8 @@ class ADU:
     pdu: both for Modbus TCP and RTU
     crc: Error check only relevant for Modbus RTU
     """
-    mbap_header: MBAPHeader = MBAPHeader()
-    pdu: PDU = PDU()
+    mbap_header: MBAPHeader = field(default_factory=MBAPHeader)
+    pdu: PDU = field(default_factory=PDU)
     crc: int = 0
     def encode(self, modbus_type: ModbusType):
         return_value = bytearray()

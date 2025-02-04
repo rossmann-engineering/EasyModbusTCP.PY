@@ -6,7 +6,7 @@ Created on 12.09.2016
 '''
 
 # @UnresolvedImport
-from modbusClient import *
+from easymodbus.modbusClient import *
 # @UnresolvedImport
     
 modbusClient = ModbusClient('127.0.0.1', 502)
