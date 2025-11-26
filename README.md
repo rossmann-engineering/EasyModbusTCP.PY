@@ -58,14 +58,14 @@ Two arguments must be passed for Modbus TCP. This is the IP address and the port
 
 Example for **Modbus RTU**  
 ```python
-import easymodbus.modbusClient
-modbus_client = easymodbus.modbusClient.ModbusClient('/dev/ttyUSB0')
+import easymodbus.modbus_client
+modbus_client = easymodbus.modbus_client.ModbusClient('/dev/ttyUSB0')
 ```
 
 Example for **Modbus TCP**  
 ```python
-import easymodbus.modbusClient
-modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.52', 502)
+import easymodbus.modbus_client
+modbus_client = easymodbus.modbus_client.ModbusClient('192.168.178.52', 502)
 ```
 
 <div id="connect"/>
@@ -105,17 +105,17 @@ In the example method call we read Register 1 and 2 (Because register "0" does n
 Please check the documentation of your device (or try it out)
 
 ```python
-import easymodbus.modbusClient
+import easymodbus.modbus_client
 
 #create an instance of a Modbus-TCP class (Server IP-Address and Port) and connect
-modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.110', 502)
+modbus_client = easymodbus.modbus_client.ModbusClient('192.168.178.110', 502)
 modbus_client.connect()
 
 #The first argument is the starting address, the second argument is the quantity.
 coils = modbus_client.read_coils(0, 2)	#Read coils 1 and 2 from server 
-discrete_inputs = modbus_client.read_discreteinputs(10, 10)	#Read discrete inputs 11 to 20 from server 
-input_registers = modbus_client.read_inputregisters(0, 10)	#Read input registers 1 to 10 from server 
-holding_registers = modbus_client.read_holdingregisters(0, 5)	#Read holding registers 1 to 5 from server 
+discrete_inputs = modbus_client.read_discrete_inputs(10, 10)	#Read discrete inputs 11 to 20 from server 
+input_registers = modbus_client.read_input_registers(0, 10)	#Read input registers 1 to 10 from server 
+holding_registers = modbus_client.read_holding_registers(0, 5)	#Read holding registers 1 to 5 from server 
 modbus_client.close()
 ```
 
@@ -134,10 +134,10 @@ In the example method call we write to Register 1 (Because register "0" does not
 Please check the documentation of your device (or try it out)
 
 ```python
-import easymodbus.modbusClient
+import easymodbus.modbus_client
 
 #create an instance of a Modbus-TCP class (Server IP-Address and Port) and connect
-modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.110', 502)
+modbus_client = easymodbus.modbus_client.ModbusClient('192.168.178.110', 502)
 modbus_client.connect()
 
 holding_register_value = 115
@@ -156,7 +156,7 @@ All examples are available in the folder "examples" in the Git-Repository
 
 <div id="example1"/>
 
-#### 4.1 Example 1 (Read two Holding Registres from Modbus-TCP Server)
+#### 4.1 Example 1 (Read two Holding Registers from Modbus-TCP Server)
 First we create an instance of a Modbus-TCP class (Server IP-Address and Port)
 Then we Read 2 Holding Registers from the Server.  
 IMPORTANT: Usually there is a Register shift between the request and the server address range
@@ -166,10 +166,10 @@ Please check the documentation of your device (or try it out)
 
 
 ```python
-import easymodbus.modbusClient
+import easymodbus.modbus_client
 
 #create an instance of a Modbus-TCP class (Server IP-Address and Port) and connect
-modbus_client = easymodbus.modbusClient.ModbusClient('192.168.178.110', 502)
+modbus_client = easymodbus.modbus_client.ModbusClient('192.168.178.110', 502)
 modbus_client.connect()
 
 #The first argument is the starting registers, the second argument is the quantity.
@@ -195,11 +195,11 @@ Class:  ModbusClient
 **Constructor def \_\_init__(self, \*params)**
 
 <u>Constructor for Modbus RTU (serial line):</u>
-modbusClient = ModbusClient.ModbusClient(‘COM1’)
+modbusClient = modbus_client.ModbusClient(‘COM1’)
 First Parameter is the serial Port
 
 <u>Constructor for Modbus TCP:</u>
-modbusClient = ModbusClient.ModbusClient(‘127.0.0.1’, 502)
+modbusClient = modbus_client.ModbusClient(‘127.0.0.1’, 502)
 First Parameter ist the IP-Address of the Server to connect to
 Second Parameter is the Port the Server listens to
 

@@ -21,7 +21,7 @@ print (discreteInputs)
 
 holdingRegisters = convert_registers_to_float(modbusClient.read_holdingregisters(0, 2))
 print (holdingRegisters)
-inputRegisters = modbusClient.read_inputregisters(0, 8)
+inputRegisters = modbusClient.read_input_registers(0, 8)
 print (inputRegisters)
 coils = modbusClient.read_coils(0, 8)
 print (coils)

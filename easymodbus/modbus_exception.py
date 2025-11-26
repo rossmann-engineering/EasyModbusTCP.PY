@@ -1,14 +1,14 @@
-'''
+"""
 Created on 14.09.2016
 
 @author: Stefan Rossmann
-'''
+"""
 
 
 class ModbusException(Exception):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if Modbus Server returns error code "Function Code not executed (0x04)"
@@ -17,10 +17,10 @@ class ModbusException(Exception):
         """
         self.message = message
 
-class TimeoutError(ModbusException):
-    '''
+class ModbusTimeoutError(ModbusException):
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if read times out
@@ -31,9 +31,9 @@ class TimeoutError(ModbusException):
 
 
 class SerialPortNotOpenedException(ModbusException):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if serial port is not opened
@@ -44,9 +44,9 @@ class SerialPortNotOpenedException(ModbusException):
 
 
 class ConnectionException(ModbusException):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if Connection to Modbus device failed
@@ -57,9 +57,9 @@ class ConnectionException(ModbusException):
 
 
 class FunctionCodeNotSupportedException(ModbusException):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if Modbus Server returns error code "Function code not supported"
@@ -70,9 +70,9 @@ class FunctionCodeNotSupportedException(ModbusException):
 
 
 class QuantityInvalidException(ModbusException):
-    '''
-    classdocs
-    '''
+    """
+    classics
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if Modbus Server returns error code "quantity invalid"
@@ -83,9 +83,9 @@ class QuantityInvalidException(ModbusException):
 
 
 class StartingAddressInvalidException(ModbusException):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if Modbus Server returns error code "starting adddress and quantity invalid"
@@ -96,9 +96,9 @@ class StartingAddressInvalidException(ModbusException):
 
 
 class CRCCheckFailedException(ModbusException):
-    '''
+    """
     classdocs
-    '''
+    """
 
     def __init__(self, message):
         """ Exception to be thrown if CRC Check failed

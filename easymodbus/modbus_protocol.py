@@ -1,7 +1,8 @@
 import logging
 from dataclasses import dataclass
 from enum import Enum, IntEnum
-import modbusException as Exceptions
+import modbus_exception as exceptions
+import modbus_exception
 
 
 class ModbusType(Enum):
@@ -94,14 +95,14 @@ class PDU:
         if self.function_code >= 128:
             exception_code = data[1]
             if exception_code == 1:
-                raise Exceptions.function_codeNotSupportedException("Function code not supported by master")
+                raise exceptions.FunctionCodeNotSupportedException("Function code not supported by master")
             elif exception_code == 2:
-                raise Exceptions.starting_addressInvalidException(
+                raise exceptions.StartingAddressInvalidException(
                     "Starting address invalid or starting address + quantity invalid")
             elif exception_code == 3:
-                raise Exceptions.QuantityInvalidException("quantity invalid")
+                raise exceptions.QuantityInvalidException("quantity invalid")
             elif exception_code == 4:
-                raise Exceptions.ModbusException("error reading")
+                raise exceptions.ModbusException("error reading")
 
         self.data = data[1:len(data)]
 
@@ -125,11 +126,11 @@ class ADU:
 
         return_value.extend(self.pdu.encode())
         if modbus_type == ModbusType.RTU:
-            self.crc = self.__calculateCRC(return_value, len(return_value), 0)
-            crcLSB = self.crc & 0xFF
-            crcMSB = (self.crc & 0xFF00) >> 8
-            return_value.append(crcLSB)
-            return_value.append(crcMSB)
+            self.crc = self.__calculate_crc(return_value, len(return_value), 0)
+            crc_lsb = self.crc & 0xFF
+            crc_msb = (self.crc & 0xFF00) >> 8
+            return_value.append(crc_lsb)
+            return_value.append(crc_msb)
         logging.debug("---------Transmit: {0}"
                       .format(str(return_value.hex(' '))))
         return return_value
@@ -142,15 +143,16 @@ class ADU:
             self.pdu.decode(data[7:len(data)])
         if modbus_type == ModbusType.RTU:
             self.pdu.decode(data[1:(len(data)-2)])
-            crc = self.__calculateCRC(data, len(data) - 2, 0)
-            crcLSB = crc & 0xFF
-            crcMSB = (crc & 0xFF00) >> 8
-            if (crcLSB != data[len(data) - 2]) & (crcMSB != data[len(data) - 1]):
-                raise Exceptions.CRCCheckFailedException("CRC check failed")
+            crc = self.__calculate_crc(data, len(data) - 2, 0)
+            crc_lsb = crc & 0xFF
+            crc_msb = (crc & 0xFF00) >> 8
+            if (crc_lsb != data[len(data) - 2]) & (crc_msb != data[len(data) - 1]):
+                raise exceptions.CRCCheckFailedException("CRC check failed")
 
-    def __calculateCRC(self, data, numberOfBytes, startByte):
+    @staticmethod
+    def __calculate_crc(data, number_of_bytes, start_byte):
         crc = 0xFFFF
-        for x in range(0, numberOfBytes):
+        for x in range(0, number_of_bytes):
             crc = crc ^ data[x]
             for _ in range(0, 8):
                 if (crc & 0x0001) != 0:
