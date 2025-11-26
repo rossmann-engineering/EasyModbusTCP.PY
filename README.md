@@ -173,7 +173,7 @@ modbus_client = easymodbus.modbus_client.ModbusClient('192.168.178.110', 502)
 modbus_client.connect()
 
 #The first argument is the starting registers, the second argument is the quantity.
-register_values = modbus_client.read_holdingregisters(0, 2)
+register_values = modbus_client.read_holding_registers(0, 2)
 
 print("Value of Register #1:" + str(register_values[0]))
 print("Value of Register #2:" + str(register_values[1])) 
