@@ -76,7 +76,6 @@ class MBAPHeader:
         self.length = data[5] | (data[4] << 8)
         self.unit_identifier = data[6]
 
-@dataclass
 class PDU:
     """
     Dataclass which represents the PDU (Protocol Data Unit) - Both for Modbus RTU and Modbus TCP
@@ -106,7 +105,7 @@ class PDU:
 
         self.data = data[1:len(data)]
 
-@dataclass
+
 class ADU:
     """
     Dataclass which represents the ADU (Application Data Unit) - Both for Modbus RTU and Modbus TCP

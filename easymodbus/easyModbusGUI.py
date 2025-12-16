@@ -2,16 +2,18 @@
 
 import sys
 
+from easymodbus.modbus_client import ModbusClient
+
 if sys.version_info[0] < 3:                 #The Module "Tkinter" is named "tkinter" in Python 3.
-    from Tkinter import *
-    import tkMessageBox as messagebox       #We import tkMessageBos as messagebox, because thats the name in Python 3
+    from tkinter import *
+    from tkinter import messagebox    #We import tkMessageBos as messagebox, because thats the name in Python 3
 
 else:
     from tkinter import *
     from builtins import int
     from future.moves import tkinter
     import tkinter.messagebox as messagebox
-from easymodbus.modbusClient import *
+
 
 class EasyModbusGUI(Frame):
     def __init__(self, master=None):
