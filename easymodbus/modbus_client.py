@@ -3,6 +3,7 @@ Created on 12.09.2016
 
 @author: Stefan Rossmann
 """
+import datetime
 import importlib
 import socket
 import struct
@@ -41,7 +42,18 @@ class ModbusClient(object):
         self.__connected = False
         self.__logging_level = logging.INFO
         self.__stoplistening = False
+        self.__listening = False
+        self.__socket_closed = False
         self.__debug = False
+        self.__ipAddress = None
+        self.__port = None
+        self.serialPort = None
+        self.__baudrate = None
+        self.__parity = None
+        self.__stopbits = None
+        self.__transactionIdentifier = None
+        self.__ser = None
+        self.__dt_request = None
         # Constructor for RTU
         if len(params) == 1 & isinstance(params[0], str):
             serial = importlib.import_module("serial")
@@ -54,7 +66,6 @@ class ModbusClient(object):
 
         # Constructor for TCP
         elif (len(params) == 2) & isinstance(params[0], str) & isinstance(params[1], int):
-            self.__tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__ipAddress = params[0]
             self.__port = params[1]
         else:
@@ -89,29 +100,48 @@ class ModbusClient(object):
                 .format(str(self.serialPort), str(self.__baudrate), str(self.__parity), str(self.__stopbits)))
 
         # print (self.ser)
-        if self.__tcpClientSocket is not None:
+        if not self.__connected:
+            self.__tcpClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__tcpClientSocket.settimeout(5)
             self.__tcpClientSocket.connect((self.__ipAddress, self.__port))
 
             self.__connected = True
+            self.__listening = False
             self.__thread = threading.Thread(target=self.__listen, args=())
             self.__thread.start()
+            while not self.__listening:
+                time.sleep(0.1)
             logging.info(
                 "Modbus client connected to TCP network, IP Address: {0}, Port: {1}"
                 .format(str(self.__ipAddress), str(self.__port)))
 
     def __listen(self):
+        logging.info("Modbus client listening for Incomming answers from Server")
         self.__stoplistening = False
         self.__receivedata = bytearray()
+
         try:
             while not self.__stoplistening:
                 if len(self.__receivedata) == 0:
-                    self.__receivedata = bytearray()
                     self.__timeout = 500
                     if self.__tcpClientSocket is not None:
+                        self.__listening = True
                         self.__receivedata = self.__tcpClientSocket.recv(256)
+                        if (datetime.datetime.now() - self.__dt_request) > datetime.timedelta(milliseconds=self.__timeout):
+                            break
+
+                    else:
+                        break
+                else:
+                    self.__dt_request = None
+                    self.__listening = False
+            logging.info("Modbus client listening Thread ended")
         except socket.timeout:
+            logging.info("Modbus client listening Thread timeout")
             self.__receivedata = None
+        finally:
+            self.__socket_closed = True
+            logging.info("Modbus client listening Thread closed")
 
     def close(self):
         """
@@ -123,7 +153,11 @@ class ModbusClient(object):
             self.__stoplistening = True
             self.__tcpClientSocket.shutdown(socket.SHUT_RDWR)
             self.__tcpClientSocket.close()
+
         self.__connected = False
+        while not self.__socket_closed:
+            time.sleep(0.1)
+        self.__socket_closed = False
         logging.info("Modbus client connection closed")
 
     def read_discreteinputs(self, starting_address, quantity):
@@ -232,7 +266,7 @@ class ModbusClient(object):
                 self.__adu.mbap_header.length = 7 + math.floor(len(values) / 8)
             else:
                 self.__adu.mbap_header.length = 7 + math.floor(len(values) / 8) + 1
-        if function_code == FunctionCode.WRITE_MULTIPLE_REGISTERS:
+        elif function_code == FunctionCode.WRITE_MULTIPLE_REGISTERS:
             self.__adu.mbap_header.length = len(values) * 2 + 7
 
         self.__adu.mbap_header.unit_identifier = self.unitidentifier
@@ -318,13 +352,19 @@ class ModbusClient(object):
                 raise exceptions.ModbusTimeoutError('Read timeout Exception')
             self.__adu.decode(ModbusType.RTU, bytearray(data))
         else:
-            self.__tcpClientSocket.send(self.__adu.encode(modbus_type=ModbusType.TCP))
             self.__receivedata = bytearray()
+            self.__tcpClientSocket.send(self.__adu.encode(modbus_type=ModbusType.TCP))
+            self.__dt_request = datetime.datetime.now()
             try:
                 while len(self.__receivedata) == 0:
                     time.sleep(0.001)
+                    if self.__socket_closed:
+                        raise modbus_exception.ModbusTimeoutError('Connection closed Exception')
+            except exceptions.ModbusTimeoutError:
+                raise modbus_exception.ModbusTimeoutError('Connection closed Exception')
             except Exception:
                 raise Exception('Read Timeout')
+
             self.__adu.decode(ModbusType.TCP, bytearray(self.__receivedata))
         if (function_code == FunctionCode.READ_COILS) | (
                 function_code == FunctionCode.READ_DISCRETE_INPUTS) | (
@@ -621,23 +661,46 @@ def convert_registers_to_float(registers, register_order=RegisterOrder.lowHigh):
 
 
 if __name__ == "__main__":
-    modbus_client = ModbusClient('10.211.55.3', 502)
+    modbus_client = ModbusClient('127.0.0.1', 502)
     modbus_client.debug = True
     modbus_client.logging_level = logging.DEBUG
-    modbus_client.connect()
     counter = 0
-    while (1):
+    while 1:
         counter = counter + 1
         modbus_client.unitidentifier = 1
         # registers = [1,2,3,4,5,6,7,8,9]
         # modbus_client.write_multiple_registers(1, registers)
+        modbus_client.connect()
         modbus_client.write_single_coil(1, 1)
+        modbus_client.close()
+
+        modbus_client.connect()
         modbus_client.write_single_coil(8, 0)
+        modbus_client.close()
+
+        modbus_client.connect()
         modbus_client.write_single_register(8, 4711)
+        modbus_client.close()
+
+        modbus_client.connect()
         modbus_client.write_multiple_registers(8, [4711, 4712])
+        modbus_client.close()
+
+        modbus_client.connect()
         modbus_client.write_multiple_coils(2, [True, True])
+        modbus_client.close()
+
+        modbus_client.connect()
         print(modbus_client.read_discrete_inputs(1, 1))
+        modbus_client.close()
+
+        modbus_client.connect()
         print(modbus_client.read_coils(0, 14))
+        modbus_client.close()
+
+        modbus_client.connect()
         print(modbus_client.read_holding_registers(0, 14))
+        modbus_client.close()
+
 
 
