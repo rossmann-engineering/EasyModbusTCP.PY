@@ -21,6 +21,7 @@ class ModbusServer:
         self.discrete_inputs = [False] * 65535
         self.__adu = ADU()
         #self.listen()
+        self.conn = None
 
 
     def listen(self):
@@ -31,8 +32,8 @@ class ModbusServer:
                 s.bind((self.host, self.port))
                 while True:
                         s.listen()
-                        conn, addr = s.accept()
-                        thread5 = threading.Thread(target=self.modbus_connection, args=(conn, addr))
+                        self.conn, addr = s.accept()
+                        thread5 = threading.Thread(target=self.modbus_connection, args=(self.conn, addr))
                         thread5.daemon = True
                         thread5.start()
 
@@ -79,6 +80,10 @@ class ModbusServer:
                     print('Exception Modbus connection: ' + str(traceback.format_exc()))
                     conn.close()
                     break
+
+    def close(self):
+        logging.info('Closing Modbus Server')
+        self.conn.close()
 
     def __execute_server_request(self):
         logging.info("got request" + str(self.__adu))

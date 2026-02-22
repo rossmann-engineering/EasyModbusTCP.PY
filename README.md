@@ -14,9 +14,12 @@ Visit www.EasyModbusTCP.net for more informations and Codesamples
 4. [Examples](#examples)  
    4.1. [Example 1 (Read two Holding Registres from Siemens S7-1200 via Modbus-TCP)](#example1)  
 5. [Library Documentation](#documentation)  
-   5.1 [Methods](#methods)  
-   5.2 [Properties](#properties)  
-   5.3 [Helper functions](#functions)
+   5.1 [Modbus Client](#modbusclient)  
+     5.1.1 [Methods](#methods)  
+     5.1.2 [Properties](#properties)  
+     5.1.3 [Helper functions](#functions)  
+   5.2 [Modbus Server](#modbusserver)  
+      5.2.1 [Methods](#servermethods)  
 
 <div id="installation"/>
 
@@ -186,11 +189,15 @@ modbus_client.close()
 
 ### 5. Library Documentation
 
+<div id="modbusclient"/>
+
+#### 5.1 Modbus Client
+
 Class:  ModbusClient
 
 <div id="methods"/>
 
-#### 5.1 Methods
+##### 5.1.1 Methods
 
 **Constructor def \_\_init__(self, \*params)**
 
@@ -277,7 +284,7 @@ deprecated - Use "read_input_registers" instead
 
 <div id="properties"/>
 
-#### 5.2 Properties
+#### 5.1.2 Properties
 
 **port**
 
@@ -346,7 +353,7 @@ The are logged at the console output and stored in logfile.txt
 
 <div id="functions"/>
 
-#### 5.3 Helper functions
+#### 5.1.3 Helper functions
 
 **def convert_double_to_two_registers(doubleValue, register_order=RegisterOrder.lowHigh)**
 
@@ -375,3 +382,38 @@ Convert two 16 Bit Registers to 32 Bit real value - Used to receive float values
 registers: 16 Bit Registers  
 register_order: Desired Word Order (Low Register first or High Register first - Default: RegisterOrder.lowHigh  
 return: 32 bit value real 
+
+<div id="modbusserver"/>
+
+#### 5.2 Modbus Server
+
+Class:  ModbusServer
+The Modbus Server only supports Modbus TCP
+
+<div id="servermethods"/>
+
+##### 5.2.1 Methods
+
+**Constructor def \_\_init__(self)**
+
+<u>Constructor for the Modbus TCP Server</u>   
+modbus_server = easymodbus.ModbusServer()  
+
+**def listen(self)**
+
+Activates the Modbus TCP server, which listens for requests from the client.
+
+**def close(self)**
+Closes the server
+
+<div id="serverproperties"/>
+
+#### 5.2.2 Properties
+
+**logging_level**
+ 
+Gets or Sets the logging level, Default is logging.INFO  
+
+**debug**
+
+Sets the debug flag, which writes logging information to a file
