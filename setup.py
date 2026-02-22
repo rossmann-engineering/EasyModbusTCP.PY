@@ -14,11 +14,11 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='EasyModbus',
     packages = ['easymodbus'],
-    version      = '2.1.0',
+    version      = '2.1.1',
     license      = 'MIT',
     author       = 'Stefan Rossmann',
     author_email = 'info@rossmann-engineering.de',
-    url          = 'http://www.easymodbustcp.net',#'https://github.com/rossmann-engineering/EasyModbusTCP.PY',
+    url          = 'https://github.com/rossmann-engineering/EasyModbusTCP.PY',
     long_description=long_description,
     description='THE standard library for Modbus RTU and Modbus TCP - See www.EasyModbusTCP.NET for documentation',
     long_description_content_type='text/markdown',
