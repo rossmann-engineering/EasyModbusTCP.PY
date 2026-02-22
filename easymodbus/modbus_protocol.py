@@ -105,6 +105,9 @@ class PDU:
 
         self.data = data[1:len(data)]
 
+    def __str__(self):
+        return "PDU(function_code={0}, data={1})".format(self.function_code, self.data)
+
 
 class ADU:
     """
@@ -160,3 +163,6 @@ class ADU:
                 else:
                     crc = crc >> 1
         return crc
+
+    def __str__(self):
+        return self.mbap_header.__str__() + self.pdu.__str__()

@@ -123,12 +123,13 @@ class ModbusClient(object):
         try:
             while not self.__stoplistening:
                 if len(self.__receivedata) == 0:
-                    self.__timeout = 500
+                    self.__timeout = 5000
                     if self.__tcpClientSocket is not None:
                         self.__listening = True
                         self.__receivedata = self.__tcpClientSocket.recv(256)
-                        if (datetime.datetime.now() - self.__dt_request) > datetime.timedelta(milliseconds=self.__timeout):
-                            break
+                        if self.__dt_request is not None:
+                            if (datetime.datetime.now() - self.__dt_request) > datetime.timedelta(milliseconds=self.__timeout):
+                                break
 
                     else:
                         break
@@ -665,42 +666,43 @@ if __name__ == "__main__":
     modbus_client.debug = True
     modbus_client.logging_level = logging.DEBUG
     counter = 0
+    modbus_client.connect()
     while 1:
         counter = counter + 1
         modbus_client.unitidentifier = 1
         # registers = [1,2,3,4,5,6,7,8,9]
         # modbus_client.write_multiple_registers(1, registers)
-        modbus_client.connect()
-        modbus_client.write_single_coil(1, 1)
-        modbus_client.close()
+        #modbus_client.connect()
+        #modbus_client.write_single_coil(1, 1)
+        #modbus_client.close()
 
-        modbus_client.connect()
+
         modbus_client.write_single_coil(8, 0)
-        modbus_client.close()
 
-        modbus_client.connect()
+
+        #odbus_client.connect()
         modbus_client.write_single_register(8, 4711)
-        modbus_client.close()
+        #modbus_client.close()
 
-        modbus_client.connect()
+        #modbus_client.connect()
         modbus_client.write_multiple_registers(8, [4711, 4712])
-        modbus_client.close()
+        #modbus_client.close()
 
-        modbus_client.connect()
+        #modbus_client.connect()
         modbus_client.write_multiple_coils(2, [True, True])
-        modbus_client.close()
+        #modbus_client.close()
 
-        modbus_client.connect()
+        #modbus_client.connect()
         print(modbus_client.read_discrete_inputs(1, 1))
-        modbus_client.close()
+        #modbus_client.close()
 
-        modbus_client.connect()
+        #modbus_client.connect()
         print(modbus_client.read_coils(0, 14))
-        modbus_client.close()
+        #modbus_client.close()
 
-        modbus_client.connect()
+        #modbus_client.connect()
         print(modbus_client.read_holding_registers(0, 14))
-        modbus_client.close()
+        #modbus_client.close()
 
 
 
